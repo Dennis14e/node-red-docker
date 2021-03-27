@@ -29,6 +29,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./docker/Dockerfile.alpine
-          platforms: ${ARCH}
+          platforms: ${{ matrix.ARCH }}
           push: false
-          tags: node-red/node-red:latest-${NODE_VERSION}-${TAG_SUFFIX}
+          tags: node-red/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
