@@ -237,19 +237,7 @@ function docker_manifest_list_latest() {
 }
 
 function setup_dependencies() {
-  echo "PREPARE: Setting up dependencies."
-  sudo apt-get update
-  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
-
-  echo "PREPARE: Setup Docker repository."
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-  echo \
-    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-    | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  echo "PREPARE: Install docker with buildx."
-  sudo apt-get update
-  sudo apt-get install -y -o Dpkg::Options::="--force-confnew" docker-ce
+  echo "PREPARE: Install docker buildx."
   mkdir -vp ~/.docker/cli-plugins/
   curl -sSL "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
   chmod a+x ~/.docker/cli-plugins/docker-buildx
