@@ -1,16 +1,17 @@
-ARG ARCH=amd64
 ARG NODE_VERSION=12
 ARG OS=buster-slim
 
 #### Stage BASE ########################################################################################################
-FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
+FROM node:${NODE_VERSION}-${OS} AS base
 
 # Copy scripts
-COPY scripts/*.sh /tmp/
+COPY .docker/scripts/*.sh /tmp/
+COPY .docker/healthcheck.js /
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
-    apt-get update && apt-get install -y \
+    apt-get update && \
+    apt-get install -y \
         bash \
         tzdata \
         curl \
@@ -40,8 +41,9 @@ COPY flows.json /data
 FROM base AS build
 
 # Install Build tools
-RUN apt-get update && apt-get install -y build-essential python && \
-    npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
+RUN apt-get update && \
+    apt-get install -y build-essential python && \
+    npm install --unsafe-perm --no-update-notifier --no-audit --no-fund --only=production && \
     npm uninstall node-red-node-gpio && \
     cp -R node_modules prod_node_modules
 
@@ -50,8 +52,8 @@ FROM base AS RELEASE
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
+ARG DOCKER_ARCH
 ARG NODE_RED_VERSION
-ARG ARCH
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
@@ -64,7 +66,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
-    org.label-schema.arch=${ARCH} \
+    org.label-schema.arch=${DOCKER_ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
@@ -88,6 +90,6 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 EXPOSE 1880
 
 # Add a healthcheck (default every 30 secs)
-# HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
+HEALTHCHECK CMD node /healthcheck.js
 
-ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+ENTRYPOINT ["npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
