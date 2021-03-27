@@ -134,7 +134,7 @@ function docker_manifest_list_version() {
   docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
-  
+
   docker run --rm mplatform/mquery ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
 }
 
@@ -240,8 +240,18 @@ function docker_manifest_list_latest() {
 
 function setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
-  sudo apt update -y
-  sudo apt install --only-upgrade docker-ce -y
+  sudo apt-get update
+  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+  echo "PREPARE: Setup Docker repository."
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  echo \
+    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  echo "PREPARE: Install docker."
+  sudo apt-get update
+  sudo apt-get install -y docker-ce docker-ce-cli
 }
 
 function update_docker_configuration() {
