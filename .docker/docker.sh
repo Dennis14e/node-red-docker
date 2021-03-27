@@ -239,7 +239,7 @@ function docker_manifest_list_latest() {
 function setup_dependencies() {
   echo "PREPARE: Install docker buildx."
   mkdir -vp $HOME/.docker/cli-plugins/
-  curl -sSL "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > $HOME/.docker/cli-plugins/docker-buildx
+  curl -sSL "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64" > $HOME/.docker/cli-plugins/docker-buildx
   chmod a+x $HOME/.docker/cli-plugins/docker-buildx
 }
 
@@ -255,10 +255,7 @@ function update_docker_configuration() {
 
   # enable experimental
   echo '{
-    "experimental": true,
-    "storage-driver": "overlay2",
-    "max-concurrent-downloads": 50,
-    "max-concurrent-uploads": 50
+    "experimental": true
   }' | sudo tee /etc/docker/daemon.json
 
   sudo systemctl restart docker.service
@@ -267,17 +264,7 @@ function update_docker_configuration() {
 function prepare_qemu() {
   echo "PREPARE: Qemu"
   # Prepare qemu to build non amd64 / x86_64 images
-  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-
-  #docker run --rm --privileged multiarch/qemu-user-static:register --reset
-  #mkdir tmp
-  #pushd tmp &&
-  #  curl -L -o qemu-x86_64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-x86_64-static.tar.gz && tar xzf qemu-x86_64-static.tar.gz &&
-  #  curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz &&
-  #  curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz && tar xzf qemu-aarch64-static.tar.gz &&
-  #  curl -L -o qemu-s390x-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-s390x-static.tar.gz && tar xzf qemu-s390x-static.tar.gz &&
-  #  curl -L -o qemu-i386-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-i386-static.tar.gz && tar xzf qemu-i386-static.tar.gz &&
-  #  popd
+  docker run --rm --privileged multiarch/qemu-user-static:register --reset
 }
 
 main "$1" "$2" "$3"

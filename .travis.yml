@@ -15,11 +15,12 @@ language: shell
 
 env:
   global:
-    - QEMU_VERSION=v5.2.0-2
+    - BUILDX_VERSION=v0.5.1
     - OS=alpine
     - DOCKER_FILE=Dockerfile.alpine
 
   jobs:
+
     ### Node JS 10 #####################################################################################################
     # Default Images
     - NODE_VERSION=10 TAG_SUFFIX=default DOCKER_ARCH=linux/amd64  ARCH=amd64
