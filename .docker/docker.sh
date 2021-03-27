@@ -58,26 +58,24 @@ function docker_prepare() {
 function docker_build() {
   # Build Docker image
   echo "DOCKER BUILD: Build Docker image."
-  echo "DOCKER BUILD: arch - ${ARCH}."
+  echo "DOCKER BUILD: arch - ${DOCKER_ARCH}."
   echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
   echo "DOCKER BUILD: os -> ${OS}."
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
-  echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
   echo "DOCKER BUILD: tag suffix - ${TAG_SUFFIX}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
-  docker build --no-cache \
-    --build-arg ARCH=${ARCH} \
+  docker buildx build --no-cache \
+    --platform ${DOCKER_ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
     --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
     --build-arg BUILD_VERSION=${BUILD_VERSION} \
     --build-arg BUILD_REF=${TRAVIS_COMMIT} \
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
-    --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
-    --file ./.docker/${DOCKER_FILE} \
+    --file ${DOCKER_FILE} \
     --tag ${TARGET}:build .
 }
 
@@ -246,12 +244,15 @@ function setup_dependencies() {
   echo "PREPARE: Setup Docker repository."
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
   echo \
-    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+    | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-  echo "PREPARE: Install docker."
+  echo "PREPARE: Install docker with buildx."
   sudo apt-get update
-  sudo apt-get install -y docker-ce docker-ce-cli
+  sudo apt-get install -y -o Dpkg::Options::="--force-confnew" docker-ce
+  mkdir -vp ~/.docker/cli-plugins/
+  curl -sSL "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
+  chmod a+x ~/.docker/cli-plugins/docker-buildx
 }
 
 function update_docker_configuration() {
@@ -272,21 +273,23 @@ function update_docker_configuration() {
     "max-concurrent-uploads": 50
   }' | sudo tee /etc/docker/daemon.json
 
-  sudo service docker restart
+  sudo systemctl restart docker.service
 }
 
 function prepare_qemu() {
   echo "PREPARE: Qemu"
   # Prepare qemu to build non amd64 / x86_64 images
-  docker run --rm --privileged multiarch/qemu-user-static:register --reset
-  mkdir tmp
-  pushd tmp &&
-    curl -L -o qemu-x86_64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-x86_64-static.tar.gz && tar xzf qemu-x86_64-static.tar.gz &&
-    curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz &&
-    curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz && tar xzf qemu-aarch64-static.tar.gz &&
-    curl -L -o qemu-s390x-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-s390x-static.tar.gz && tar xzf qemu-s390x-static.tar.gz &&
-    curl -L -o qemu-i386-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-i386-static.tar.gz && tar xzf qemu-i386-static.tar.gz &&
-    popd
+  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+  #docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  #mkdir tmp
+  #pushd tmp &&
+  #  curl -L -o qemu-x86_64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-x86_64-static.tar.gz && tar xzf qemu-x86_64-static.tar.gz &&
+  #  curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz &&
+  #  curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz && tar xzf qemu-aarch64-static.tar.gz &&
+  #  curl -L -o qemu-s390x-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-s390x-static.tar.gz && tar xzf qemu-s390x-static.tar.gz &&
+  #  curl -L -o qemu-i386-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-i386-static.tar.gz && tar xzf qemu-i386-static.tar.gz &&
+  #  popd
 }
 
 main "$1" "$2" "$3"
