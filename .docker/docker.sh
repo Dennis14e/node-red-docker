@@ -238,15 +238,15 @@ function docker_manifest_list_latest() {
 
 function setup_dependencies() {
   echo "PREPARE: Install docker buildx."
-  mkdir -vp ~/.docker/cli-plugins/
-  curl -sSL "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
-  chmod a+x ~/.docker/cli-plugins/docker-buildx
+  mkdir -vp $HOME/.docker/cli-plugins/
+  curl -sSL "https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64" > $HOME/.docker/cli-plugins/docker-buildx
+  chmod a+x $HOME/.docker/cli-plugins/docker-buildx
 }
 
 function update_docker_configuration() {
   echo "PREPARE: Updating docker configuration"
 
-  mkdir $HOME/.docker
+  mkdir -vp $HOME/.docker
 
   # enable experimental to use docker manifest command
   echo '{
