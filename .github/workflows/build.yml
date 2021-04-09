@@ -26,6 +26,9 @@ jobs:
           - default
           - minimal
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set TARGET environment variable
         if: startsWith(github.ref, 'refs/tags/v')
         run: echo "TARGET=nodered/node-red" >> $GITHUB_ENV
@@ -35,10 +38,7 @@ jobs:
 
       - name: Remove linux/386 from Node 14 build
         if: matrix.NODE_VERSION == 14
-        run: echo "PLATFORMS={{ env.PLATFORMS }}" | sed -e 's/linux\/386//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
-
-      - name: Checkout code
-        uses: actions/checkout@v2
+        run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/386//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
