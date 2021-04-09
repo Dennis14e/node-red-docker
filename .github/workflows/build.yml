@@ -39,7 +39,7 @@ jobs:
         run: echo "BUILD_VERSION=${{ github.run_id }}" >> $GITHUB_ENV
 
       - name: Remove linux/arm/v6 from buster-slim build
-        if: matrix.OS == buster-slim
+        if: matrix.OS == "buster-slim"
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/arm\/v6//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Checkout code
