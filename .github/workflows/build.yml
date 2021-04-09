@@ -60,7 +60,7 @@ jobs:
         run: |
           DOCKER_TAGS="${{ env.DOCKER_TAGS }},v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}"
           [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && DOCKER_TAGS="$DOCKER_TAGS,v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }},latest-${{ matrix.NODE_VERSION }}"
-          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && [ ${{ matrix.NODE_VERSION }} -eq 12 ] && DOCKER_TAGS="$DOCKER_TAGS,latest"
+          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && [ ${{ matrix.NODE_VERSION }} -eq 12 ] && DOCKER_TAGS="$DOCKER_TAGS,v${{ env.NODE_RED_VERSION }},latest"
           echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
 
       - name: Set up QEMU
