@@ -1,4 +1,4 @@
-name:  Build images
+name: Build images
 
 on:
   push:
@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TARGET: nodered/node-red-dev
     strategy:
       fail-fast: false
       matrix:
@@ -15,6 +17,10 @@ jobs:
         TAG_SUFFIX: [ default, minimal ]
         OS: [ alpine ] # buster
     steps:
+      - name: Set TARGET environment variable
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo "nodered/node-red" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -30,5 +36,13 @@ jobs:
           context: .
           file: Dockerfile.${{ matrix.OS }}
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x,linux/386
+          pull: true
           push: false
           tags: node-red/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
+          build-args: |
+            BUILD_SHA=${{ github.sha }}
+            BUILD_REF=${{ github.ref }}
+            OS=${{ matrix.OS }}
+            NODE_VERSION=${{ matrix.NODE_VERSION }}
+            TARGET=${{ env.TARGET }}
+            TAG_SUFFIX=${{ matrix.TAG_SUFFIX }}
