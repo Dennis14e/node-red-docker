@@ -12,6 +12,7 @@ jobs:
       BUILD_DATE: unknown
       BUILD_VERSION: unknown
       NODE_RED_VERSION: unknown
+      DOCKER_TAGS: unknown
       TARGET: nodered/node-red-dev
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x
     strategy:
@@ -42,11 +43,25 @@ jobs:
         if: matrix.OS == 'buster-slim'
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/arm\/v6//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
+
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Get Node-RED version
         run: echo "NODE_RED_VERSION=$(jq .dependencies.\"node-red\" package.json | sed -e 's/"//g')" >> $GITHUB_ENV
+
+      - name: Set Docker tags (global)
+        run: |
+          DOCKER_TAGS="v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}"
+          echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
+
+      - name: Set Docker tags (alpine)
+        if: matrix.OS == 'alpine'
+        run: |
+          DOCKER_TAGS="${{ env.DOCKER_TAGS }},v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}"
+          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && DOCKER_TAGS="$DOCKER_TAGS,v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }},latest-${{ matrix.NODE_VERSION }}"
+          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && [ ${{ matrix.NODE_VERSION }} -eq 12 ] && DOCKER_TAGS="$DOCKER_TAGS,latest"
+          echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -70,9 +85,7 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           pull: true
           push: true
-          tags: |
-            dennis14e/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
-            dennis14e/node-red:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
+          tags: ${{ env.DOCKER_TAGS }}
           build-args: |
             BUILD_DATE=${{ env.BUILD_DATE }}
             BUILD_VERSION=${{ env.BUILD_VERSION }}
