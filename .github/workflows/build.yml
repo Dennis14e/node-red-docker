@@ -36,8 +36,8 @@ jobs:
       - name: Get Node-Red version
         run: echo "NODE_RED_VERSION=$(jq .dependencies.\"node-red\" package.json | sed -e 's/"//g')" >> $GITHUB_ENV
 
-      - name: Remove linux/386 from Node 14 build
-        if: matrix.NODE_VERSION == 14
+      - name: Remove linux/386 from Node 12/14 build
+        if: matrix.NODE_VERSION == 12 || matrix.NODE_VERSION == 14
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/386//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Set up QEMU
