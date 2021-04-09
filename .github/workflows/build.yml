@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET: nodered/node-red-dev
+      PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x,linux/386
     strategy:
       fail-fast: false
       matrix:
@@ -23,13 +24,6 @@ jobs:
         TAG_SUFFIX:
           - default
           - minimal
-        PLATFORM:
-          - linux/amd64
-          - linux/arm/v6
-          - linux/arm/v7
-          - linux/arm64
-          - linux/s390x
-          - linux/386
     steps:
       - name: Set TARGET environment variable
         if: startsWith(github.ref, 'refs/tags/v')
@@ -41,7 +35,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
-          platforms: ${{ matrix.PLATFORM }}
+          platforms: ${{ env.PLATFORMS }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -57,12 +51,10 @@ jobs:
         with:
           context: .
           file: Dockerfile.${{ matrix.OS }}
-          platforms: ${{ matrix.PLATFORM }}
+          platforms: ${{ env.PLATFORMS }}
           pull: true
           push: true
-          tags: |
-            dennis14e/node-red:latest
-            dennis14e/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
+          tags: dennis14e/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
           build-args: |
             BUILD_SHA=${{ github.sha }}
             BUILD_REF=${{ github.ref }}
@@ -70,6 +62,3 @@ jobs:
             NODE_VERSION=${{ matrix.NODE_VERSION }}
             TARGET=${{ env.TARGET }}
             TAG_SUFFIX=${{ matrix.TAG_SUFFIX }}
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
