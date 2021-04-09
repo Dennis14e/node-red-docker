@@ -52,12 +52,11 @@ FROM base AS RELEASE
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
-ARG DOCKER_ARCH
 ARG NODE_RED_VERSION
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile=".docker/Dockerfile.debian" \
+    org.label-schema.docker.dockerfile="Dockerfile.debian" \
     org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
@@ -66,7 +65,6 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
-    org.label-schema.arch=${DOCKER_ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules

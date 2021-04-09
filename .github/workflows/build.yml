@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET: nodered/node-red-dev
-      PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x
+      NODE_RED_VERSION: unknown
+      PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x,linux/386
     strategy:
       fail-fast: false
       matrix:
         OS:
           - alpine
-          # - buster
+          # - buster-slim
         NODE_VERSION:
           - 10
           - 12
@@ -27,7 +28,14 @@ jobs:
     steps:
       - name: Set TARGET environment variable
         if: startsWith(github.ref, 'refs/tags/v')
-        run: echo "nodered/node-red" >> $GITHUB_ENV
+        run: echo "TARGET=nodered/node-red" >> $GITHUB_ENV
+
+      - name: Get Node-Red version
+        run: echo "NODE_RED_VERSION=$(jq .dependencies.\"node-red\" package.json | sed -e 's/"//g')" >> $GITHUB_ENV
+
+      - name: Remove linux/386 from Node 14 build
+        if: matrix.NODE_VERSION == 14
+        run: echo "PLATFORMS={{ env.PLATFORMS }}" | sed -e 's/linux\/386//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -54,11 +62,14 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           pull: true
           push: true
-          tags: dennis14e/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
+          tags: |
+            dennis14e/node-red:latest-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
+            dennis14e/node-red:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}
           build-args: |
             BUILD_SHA=${{ github.sha }}
             BUILD_REF=${{ github.ref }}
             OS=${{ matrix.OS }}
             NODE_VERSION=${{ matrix.NODE_VERSION }}
+            NODE_RED_VERSION=v${{ env.NODE_RED_VERSION }}
             TARGET=${{ env.TARGET }}
             TAG_SUFFIX=${{ matrix.TAG_SUFFIX }}
