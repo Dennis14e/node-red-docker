@@ -19,7 +19,7 @@ jobs:
       matrix:
         OS:
           - alpine
-          # - buster-slim
+          - buster-slim
         NODE_VERSION:
           - 10
           - 12
