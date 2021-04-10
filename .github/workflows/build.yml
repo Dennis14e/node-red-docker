@@ -42,11 +42,8 @@ jobs:
       - name: Set BUILD_VERSION environment variable
         run: echo "BUILD_VERSION=${{ github.run_id }}" >> $GITHUB_ENV
 
-      - name: Debug github.event.name
-        run: echo "${{ github.event.name }}"
-
-      - name: Set DOCKER_PUSH if trigger event is 'push'
-        if: github.event.name == 'push'
+      - name: Set DOCKER_PUSH if the origin is this repository
+        if: github.ref == 'refs/heads/master'
         run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
       - name: Remove linux/arm/v6 from buster-slim build
