@@ -18,6 +18,7 @@ jobs:
       DOCKER_PUSH: false
       TARGET: nodered/node-red-dev
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/s390x
+      TAG_SUFFIX: default
     strategy:
       fail-fast: false
       matrix:
@@ -42,6 +43,12 @@ jobs:
       - name: Set BUILD_VERSION environment variable
         run: echo "BUILD_VERSION=${{ github.run_id }}" >> $GITHUB_ENV
 
+      - name: Set TAG_SUFFIX environment variable
+        run: |
+          TAG_SUFFIX="-${{ matrix.TAG_SUFFIX }}"
+          [ "$TAG_SUFFIX" = "-default" ] && TAG_SUFFIX=""
+          echo "TAG_SUFFIX=$TAG_SUFFIX" >> $GITHUB_ENV
+
       - name: Set DOCKER_PUSH if the origin is this repository
         if: github.ref == 'refs/heads/master'
         run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
@@ -58,13 +65,13 @@ jobs:
 
       - name: Set Docker tags (global)
         run: |
-          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}"
+          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
           echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
 
       - name: Set Docker tags (alpine)
         if: matrix.OS == 'alpine'
         run: |
-          DOCKER_TAGS="${{ env.DOCKER_TAGS }},${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.TAG_SUFFIX }}"
+          DOCKER_TAGS="${{ env.DOCKER_TAGS }},${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
           [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && DOCKER_TAGS="$DOCKER_TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }},${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}"
           [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && [ ${{ matrix.NODE_VERSION }} -eq 12 ] && DOCKER_TAGS="$DOCKER_TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }},${{ env.DOCKER_REPO }}:latest"
           echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
