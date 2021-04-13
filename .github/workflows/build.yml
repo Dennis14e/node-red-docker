@@ -68,7 +68,7 @@ jobs:
       - name: Set Docker tags (global)
         run: |
           TAGS=""
-          
+
           # v1.2.3-10-alpine, v1.2.3-10-alpine-minimal, v1.2.3-10-buster, v1.2.3-10-buster-minimal, v1.2.3-12-alpine, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
@@ -80,8 +80,8 @@ jobs:
       - name: Set Docker tags (alpine)
         if: matrix.OS == 'alpine'
         run: |
-          TAGS=""
-          
+          TAGS="${{ env.DOCKER_TAGS }}"
+
           # v1.2.3-10, v1.2.3-10-minimal, v1.2.3-12, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
