@@ -23,7 +23,7 @@ jobs:
       matrix:
         OS:
           - alpine
-          - buster-slim
+          - buster
         NODE_VERSION:
           - 10
           - 12
@@ -46,8 +46,8 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
-      - name: Remove linux/arm/v6 from buster-slim build
-        if: matrix.OS == 'buster-slim'
+      - name: Remove linux/arm/v6 from buster build
+        if: matrix.OS == 'buster'
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/arm\/v6//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Checkout code
@@ -97,7 +97,6 @@ jobs:
             BUILD_DATE=${{ env.BUILD_DATE }}
             BUILD_VERSION=${{ env.BUILD_VERSION }}
             BUILD_REF=${{ github.sha }}
-            OS=${{ matrix.OS }}
             NODE_VERSION=${{ matrix.NODE_VERSION }}
             NODE_RED_VERSION=v${{ env.NODE_RED_VERSION }}
             TARGET=${{ env.TARGET }}

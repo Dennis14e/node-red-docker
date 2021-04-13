@@ -1,8 +1,7 @@
 ARG NODE_VERSION=12
-ARG OS=buster-slim
 
 #### Stage BASE ########################################################################################################
-FROM node:${NODE_VERSION}-${OS} AS base
+FROM node:${NODE_VERSION}-buster-slim AS base
 
 # Copy scripts
 COPY .docker/scripts/*.sh /tmp/
