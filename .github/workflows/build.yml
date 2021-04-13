@@ -67,23 +67,31 @@ jobs:
 
       - name: Set Docker tags (global)
         run: |
-          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
-          echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
+          TAGS=""
+          
+          # v1.2.3-10-alpine, v1.2.3-10-alpine-minimal, v1.2.3-10-buster, v1.2.3-10-buster-minimal, v1.2.3-12-alpine, [...]
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
+
+          # latest-10-alpine, latest-10-alpine-minimal, latest-10-buster, latest-10-buster-minimal, latest-12-alpine, [...]
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
+
+          echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
       - name: Set Docker tags (alpine)
         if: matrix.OS == 'alpine'
         run: |
-          DOCKER_TAGS="${{ env.DOCKER_TAGS }},${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
-          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && DOCKER_TAGS="$DOCKER_TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }},${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}"
-          [ "${{ matrix.TAG_SUFFIX }}" = "minimal" ] && [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && DOCKER_TAGS="$DOCKER_TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }},${{ env.DOCKER_REPO }}:latest"
-          echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
+          TAGS=""
+          
+          # v1.2.3-10, v1.2.3-10-minimal, v1.2.3-12, [...]
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
-      - name: Set Docker tags (buster)
-        if: matrix.OS == 'buster' && matrix.TAG_SUFFIX == 'minimal'
-        run: |
-          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }},${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}"
-          [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && DOCKER_TAGS="$DOCKER_TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }},${{ env.DOCKER_REPO }}:latest-${{ matrix.OS }}"
-          echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
+          # latest-10, latest-10-minimal, latest-12, [...]
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
+
+          # latest
+          [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && [ ${{ matrix.TAG_SUFFIX }} = "default" ] TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"
+
+          echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
       - name: Set up cache
         uses: actions/cache@v2
@@ -138,3 +146,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ env.DOCKER_REPO }}
+          readme-filepath: ./docker/description.md

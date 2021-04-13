@@ -134,23 +134,23 @@ The following table shows the variety of provided Node-RED images.
 |----------------------------|--------|----------|------------|-------|------------------------|
 | 1.3.1-10                   |   10   | amd64    |   2.x 3.x  |  yes  | node:10-alpine         |
 | 1.3.1-10-alpine            |        | arm32v6  |            |       |                        |
-|                            |        | arm32v7  |            |       |                        |
+| latest-10                  |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-10-minimal           |   10   | amd64    |     no     |  no   | node:10-alpine         |
 | 1.3.1-10-alpine-minimal    |        | arm32v6  |            |       |                        |
-| latest-10                  |        | arm32v7  |            |       |                        |
+| latest-10-minimal          |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-10-buster            |   10   | amd64    |   2.x 3.x  |  yes  | node:10-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-10-buster           |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-10-buster-minimal    |   10   | amd64    |     no     |  no   | node:10-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-10-buster-minimal   |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 
@@ -159,23 +159,23 @@ The following table shows the variety of provided Node-RED images.
 |----------------------------|--------|----------|------------|-------|------------------------|
 | 1.3.1-12                   |   12   | amd64    |   2.x 3.x  |  yes  | node:12-alpine         |
 | 1.3.1-12-alpine            |        | arm32v6  |            |       |                        |
-|                            |        | arm32v7  |            |       |                        |
+| latest-12                  |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-12-minimal           |   12   | amd64    |     no     |  no   | node:12-alpine         |
 | 1.3.1-12-alpine-minimal    |        | arm32v6  |            |       |                        |
-| latest-12                  |        | arm32v7  |            |       |                        |
-| latest                     |        | arm64v8  |            |       |                        |
+| latest-12-minimal          |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-12-buster            |   12   | amd64    |   2.x 3.x  |  yes  | node:12-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-12-buster           |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-12-buster-minimal    |   12   | amd64    |     no     |  no   | node:12-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-12-buster-minimal   |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 
@@ -184,27 +184,27 @@ The following table shows the variety of provided Node-RED images.
 |----------------------------|--------|----------|------------|-------|------------------------|
 | 1.3.1-14                   |   14   | amd64    |   2.x 3.x  |  yes  | node:14-alpine         |
 | 1.3.1-14-alpine            |        | arm32v6  |            |       |                        |
-|                            |        | arm32v7  |            |       |                        |
-|                            |        | arm64v8  |            |       |                        |
+| latest-14                  |        | arm32v7  |            |       |                        |
+| latest                     |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-14-minimal           |   14   | amd64    |     no     |  no   | node:14-alpine         |
 | 1.3.1-14-alpine-minimal    |        | arm32v6  |            |       |                        |
-| latest-14                  |        | arm32v7  |            |       |                        |
-|                            |        | arm64v8  |            |       |                        |
+| latest-14-minimal          |        | arm32v7  |            |       |                        |
+| latest-minimal             |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-14-buster            |   14   | amd64    |   2.x 3.x  |  yes  | node:14-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-14-buster           |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
 | 1.3.1-14-buster-minimal    |   14   | amd64    |     no     |  no   | node:14-buster-slim    |
-|                            |        | arm32v7  |            |       |                        |
+| latest-14-buster-minimal   |        | arm32v7  |            |       |                        |
 |                            |        | arm64v8  |            |       |                        |
 |                            |        | s390x    |            |       |                        |
 
-- All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
+All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 
 ## Raspberry PI - native GPIO support
