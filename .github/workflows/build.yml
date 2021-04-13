@@ -65,7 +65,7 @@ jobs:
 
       - name: Set Docker tags (global)
         run: |
-          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
+          DOCKER_TAGS="${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
           echo "DOCKER_TAGS=$DOCKER_TAGS" >> $GITHUB_ENV
 
       - name: Set Docker tags (alpine)
