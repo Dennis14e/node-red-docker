@@ -89,7 +89,7 @@ jobs:
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
           # latest
-          [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && [ ${{ matrix.TAG_SUFFIX }} = "default" ] TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"
+          [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && [ "${{ matrix.TAG_SUFFIX }}" = "default" ] && TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
