@@ -1,11 +1,10 @@
 # Node-RED Docker
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/node-red/node-red-docker.svg?branch=master)](https://travis-ci.org/node-red/node-red-docker)
+[![Build Status](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nodered/node-red.svg)](https://hub.docker.com/r/nodered/node-red/)
 [![DockerHub Stars](https://img.shields.io/docker/stars/nodered/node-red.svg?maxAge=2592000)](https://hub.docker.com/r/nodered/node-red/)
 
-This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7, arm64v8, i386 and s390x).
+This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6*, arm32v7, arm64v8 and s390x - *There is no arm32v6 build for Debian Buster based images).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
 **Note**: In version 1.2 we removed the named VOLUME from the build. It should not affect many users - but the details are [here](volumechanges.md).
@@ -17,52 +16,58 @@ Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered
 ## Quick Start
 To run in Docker in its simplest form just run:
 
-        docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+```
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+```
 
 Let's dissect that command:
 
-        docker run              - run this container, initially building locally if necessary
-        -it                     - attach a terminal session so we can see what is going on
-        -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
-        -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
-        --name mynodered        - give this machine a friendly local name
-        nodered/node-red        - the image to base it on - currently Node-RED v1.3.1
+```
+docker run              - run this container, initially building locally if necessary
+-it                     - attach a terminal session so we can see what is going on
+-p 1880:1880            - connect local port 1880 to the exposed internal port 1880
+-v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
+--name mynodered        - give this machine a friendly local name
+nodered/node-red        - the image to base it on - currently Node-RED v1.3.1
+```
 
 
 Running that command should give a terminal window with a running instance of Node-RED.
 
-        Welcome to Node-RED
-        ===================
+```
+Welcome to Node-RED
+===================
 
-        10 Oct 12:57:10 - [info] Node-RED version: v1.3.1
-        10 Oct 12:57:10 - [info] Node.js  version: v10.22.1
-        10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
-        10 Oct 12:57:11 - [info] Loading palette nodes
-        10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
-        10 Oct 12:57:16 - [info] Context store  : 'default' [module=memory]
-        10 Oct 12:57:16 - [info] User directory : /data
-        10 Oct 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
-        10 Oct 12:57:16 - [info] Flows file     : /data/flows.json
-        10 Oct 12:57:16 - [info] Creating new flow file
-        10 Oct 12:57:17 - [warn]
+10 Oct 12:57:10 - [info] Node-RED version: v1.3.1
+10 Oct 12:57:10 - [info] Node.js  version: v10.22.1
+10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
+10 Oct 12:57:11 - [info] Loading palette nodes
+10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
+10 Oct 12:57:16 - [info] Context store  : 'default' [module=memory]
+10 Oct 12:57:16 - [info] User directory : /data
+10 Oct 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
+10 Oct 12:57:16 - [info] Flows file     : /data/flows.json
+10 Oct 12:57:16 - [info] Creating new flow file
+10 Oct 12:57:17 - [warn]
 
-        ---------------------------------------------------------------------
-        Your flow credentials file is encrypted using a system-generated key.
+---------------------------------------------------------------------
+Your flow credentials file is encrypted using a system-generated key.
 
-        If the system-generated key is lost for any reason, your credentials
-        file will not be recoverable, you will have to delete it and re-enter
-        your credentials.
+If the system-generated key is lost for any reason, your credentials
+file will not be recoverable, you will have to delete it and re-enter
+your credentials.
 
-        You should set your own key using the 'credentialSecret' option in
-        your settings file. Node-RED will then re-encrypt your credentials
-        file using your chosen key the next time you deploy a change.
-        ---------------------------------------------------------------------
+You should set your own key using the 'credentialSecret' option in
+your settings file. Node-RED will then re-encrypt your credentials
+file using your chosen key the next time you deploy a change.
+---------------------------------------------------------------------
 
-        10 Oct 12:57:17 - [info] Starting flows
-        10 Oct 12:57:17 - [info] Started flows
-        10 Oct 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
+10 Oct 12:57:17 - [info] Starting flows
+10 Oct 12:57:17 - [info] Started flows
+10 Oct 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
 
-        [...]
+[...]
+```
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
@@ -76,15 +81,21 @@ container will keep running in the background.
 
 To reattach to the terminal (to see logging) run:
 
-        $ docker attach mynodered
+```
+$ docker attach mynodered
+```
 
 If you need to restart the container (e.g. after a reboot or restart of the Docker daemon):
 
-        $ docker start mynodered
+```
+$ docker start mynodered
+```
 
 and stop it again when required:
 
-        $ docker stop mynodered
+```
+$ docker stop mynodered
+```
 
 **Healthcheck**: to turn off the Healthcheck add `--no-healthcheck` to the run command.
 
@@ -114,36 +125,77 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-| 1.3.1-10-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
-| 1.3.1-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
-| 1.3.1-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
-| 1.3.1-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
-| 1.3.1-10-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:10-alpine   |
-| 1.3.1-10-i386              |   10   | i386     |   2.x 3.x  |  yes  | i386/node:10-alpine    |
+| 1.3.1-10                   |   10   | amd64    |   2.x 3.x  |  yes  | node:10-alpine         |
+| 1.3.1-10-alpine            |        | arm32v6  |            |       |                        |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
-| 1.3.1-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
-| 1.3.1-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
-| 1.3.1-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
-| 1.3.1-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
-| 1.3.1-10-minimal-s390x     |   10   | s390x    |     no     |  no   | s390x/node:10-alpine   |
-| 1.3.1-10-minimal-i386      |   10   | i386     |     no     |  no   | i386/node:10-alpine    |
+| 1.3.1-10-minimal           |   10   | amd64    |     no     |  no   | node:10-alpine         |
+| 1.3.1-10-alpine-minimal    |        | arm32v6  |            |       |                        |
+| latest-10                  |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-10-buster            |   10   | amd64    |   2.x 3.x  |  yes  | node:10-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-10-buster-minimal    |   10   | amd64    |     no     |  no   | node:10-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
 
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-| 1.3.1-12-amd64             |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine   |
-| 1.3.1-12-arm32v6           |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
-| 1.3.1-12-arm32v7           |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
-| 1.3.1-12-arm64v8           |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
-| 1.3.1-12-s390x             |   12   | s390x    |   2.x 3.x  |  yes  | s390x/node:12-alpine   |
-| 1.3.1-12-i386              |   12   | i386     |   2.x 3.x  |  yes  | i386/node:12-alpine    |
+| 1.3.1-12                   |   12   | amd64    |   2.x 3.x  |  yes  | node:12-alpine         |
+| 1.3.1-12-alpine            |        | arm32v6  |            |       |                        |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
 |                            |        |          |            |       |                        |
-| 1.3.1-12-minimal-amd64     |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
-| 1.3.1-12-minimal-arm32v6   |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
-| 1.3.1-12-minimal-arm32v7   |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
-| 1.3.1-12-minimal-arm64v8   |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
-| 1.3.1-12-minimal-s390x     |   12   | s390x    |     no     |  no   | s390x/node:12-alpine   |
-| 1.3.1-12-minimal-i386      |   12   | i386     |     no     |  no   | i386/node:12-alpine    |
+| 1.3.1-12-minimal           |   12   | amd64    |     no     |  no   | node:12-alpine         |
+| 1.3.1-12-alpine-minimal    |        | arm32v6  |            |       |                        |
+| latest-12                  |        | arm32v7  |            |       |                        |
+| latest                     |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-12-buster            |   12   | amd64    |   2.x 3.x  |  yes  | node:12-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-12-buster-minimal    |   12   | amd64    |     no     |  no   | node:12-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+
+
+| **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|-------|------------------------|
+| 1.3.1-14                   |   14   | amd64    |   2.x 3.x  |  yes  | node:14-alpine         |
+| 1.3.1-14-alpine            |        | arm32v6  |            |       |                        |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-14-minimal           |   14   | amd64    |     no     |  no   | node:14-alpine         |
+| 1.3.1-14-alpine-minimal    |        | arm32v6  |            |       |                        |
+| latest-14                  |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-14-buster            |   14   | amd64    |   2.x 3.x  |  yes  | node:14-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
+|                            |        |          |            |       |                        |
+| 1.3.1-14-buster-minimal    |   14   | amd64    |     no     |  no   | node:14-buster-slim    |
+|                            |        | arm32v7  |            |       |                        |
+|                            |        | arm64v8  |            |       |                        |
+|                            |        | s390x    |            |       |                        |
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
