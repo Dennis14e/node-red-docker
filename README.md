@@ -9,7 +9,7 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 
 **Note**: In version 1.2 we removed the named VOLUME from the build. It should not affect many users - but the details are [here](volumechanges.md).
 
-As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
+As of Node-RED 1.0 this project provides the build for the `dennis14e/node-red` container on [Docker Hub](https://hub.docker.com/r/dennis14e/node-red/).
 
 Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
 
@@ -29,7 +29,7 @@ docker run              - run this container, initially building locally if nece
 -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
 -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
 --name mynodered        - give this machine a friendly local name
-nodered/node-red        - the image to base it on - currently Node-RED v1.3.1
+dennis14e/node-red      - the image to base it on - currently Node-RED v1.3.1
 ```
 
 
@@ -121,7 +121,7 @@ The minimal versions (without python and build tools) are not able to install no
 For example - to run the latest minimal version, you would run:
 
 ```
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest-minimal
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered dennis14e/node-red:latest-minimal
 ```
 
 The default Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
@@ -244,11 +244,12 @@ Depending on how and where you mount the user data directory you may want to tur
 
 
 ### Using a Host Directory for Persistence (Bind Mount)
-To save your Node-RED user directory inside the container to a host directory outside the container, you can use the
-command below. To allow access to this host directory, the node-red user (default uid=1000) inside the container must
-have the same uid as the owner of the host directory.
+
+To save your Node-RED user directory inside the container to a host directory outside the container, you can use the command below.
+To allow access to this host directory, the node-red user (default uid=1000) inside the container must have the same uid as the owner of the host directory.
+
 ```
-docker run -it -p 1880:1880 -v /home/pi/.node-red:/data --name mynodered nodered/node-red
+docker run -it -p 1880:1880 -v /home/pi/.node-red:/data --name mynodered dennis14e/node-red
 ```
 
 In this example the host `/home/pi/.node-red` directory is bound to the container `/data` directory.
@@ -274,7 +275,7 @@ $ docker volume create --name node_red_data_vol
 $ docker volume ls
 DRIVER              VOLUME NAME
 local               node_red_data_vol
-$ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered nodered/node-red
+$ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered dennis14e/node-red
 ```
 
 Using Node-RED to create and deploy some sample flows, we can now destroy the
@@ -282,7 +283,7 @@ container and start a new instance without losing our user data.
 
 ```
 $ docker rm mynodered
-$ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered nodered/node-red
+$ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered dennis14e/node-red
 ```
 
 
@@ -292,7 +293,7 @@ As the /data is now preserved outside of the container, updating the base contai
 is now as simple as:
 
 ```
-$ docker pull nodered/node-red
+$ docker pull dennis14e/node-red
 $ docker stop mynodered
 $ docker start mynodered
 ```
@@ -314,7 +315,7 @@ version: "3.7"
 
 services:
   node-red:
-    image: nodered/node-red:latest
+    image: dennis14e/node-red:latest
     environment:
       - TZ=Europe/Amsterdam
     ports:
@@ -378,7 +379,7 @@ which defaults to *'flows.json'*. This can be changed at runtime using the
 following command-line flag.
 
 ```
-docker run -it -p 1880:1880 -e FLOWS=my_flows.json -v node_red_data:/data nodered/node-red
+docker run -it -p 1880:1880 -e FLOWS=my_flows.json -v node_red_data:/data dennis14e/node-red
 ```
 
 **Note**: If you set `-e FLOWS=""` then the flow file can be set via the *flowFile*
@@ -389,7 +390,7 @@ parameter (**NODE_OPTIONS**). For example, to fix the heap size used by
 the Node.js garbage collector you would use the following command.
 
 ```
-docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" -v node_red_data:/data nodered/node-red
+docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" -v node_red_data:/data dennis14e/node-red
 ```
 
 Other useful environment variables include
@@ -403,8 +404,10 @@ Other useful environment variables include
 Using the administration tool, with port forwarding on the container to the host
 system, extra nodes can be installed without leaving the host system.
 
-        $ npm install -g node-red-admin
-        $ node-red-admin install node-red-node-openwhisk
+```
+$ npm install -g node-red-admin
+$ node-red-admin install node-red-node-openwhisk
+```
 
 This tool assumes Node-RED is available at the following address
 `http://localhost:1880`.
@@ -450,7 +453,7 @@ This Dockerfile builds a custom Node-RED image with the flightaware module
 installed from NPM.
 
 ```
-FROM nodered/node-red
+FROM dennis14e/node-red
 RUN npm install node-red-contrib-flightaware
 ```
 
@@ -464,7 +467,7 @@ Node-RED that is installed.
 The barest minimum we need to just run Node-RED is
 
 ```
-$ docker run -d -p 1880:1880 nodered/node-red
+$ docker run -d -p 1880:1880 dennis14e/node-red
 ```
 
 This will create a local running instance of a machine - that will have some
@@ -473,7 +476,7 @@ docker id number and be running on a random port... to find out run
 ```
 $ docker ps
 CONTAINER ID        IMAGE                            COMMAND             CREATED             STATUS                     PORTS                     NAMES
-4bbeb39dc8dc        nodered/node-red:latest          "npm start"         4 seconds ago       Up 4 seconds               0.0.0.0:49154->1880/tcp   furious_yalow
+4bbeb39dc8dc        dennis14e/node-red:latest        "npm start"         4 seconds ago       Up 4 seconds               0.0.0.0:49154->1880/tcp   furious_yalow
 ```
 
 You can now point a browser to the host machine on the tcp port reported back, so in the example
@@ -500,10 +503,10 @@ $ docker run -itd --network iot --name mybroker eclipse-mosquitto mosquitto -c /
 
 (no need to expose the port 1883 globally unless you want to... as we do magic below)
 
-Then run nodered docker, also added to the same bridge
+Then run Node-RED docker, also added to the same bridge
 
 ```
-$ docker run -itd -p 1880:1880 --network iot --name mynodered nodered/node-red
+$ docker run -itd -p 1880:1880 --network iot --name mynodered dennis14e/node-red
 ```
 
 containers on the same user-defined bridge can take advantage of the built in name resolution provided by the bridge and use the container name (specified using the **--name** option) as the target hostname.
@@ -530,7 +533,7 @@ version: "3.7"
 
 services:
   mynodered:
-    image: nodered/node-red
+    image: dennis14e/node-red
     restart: unless-stopped
     volumes:
       - /home/pi/.node-red:/data
@@ -549,13 +552,13 @@ Sometimes it is useful to debug the code which is running inside the container. 
 1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is fully up-and-running (i.e. when the application startup code is not relevant).  The Node JS server can be started in debug mode using following command:
 
 ```
-$ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm nodered/node-red run debug -- --userDir /data
+$ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm dennis14e/node-red run debug -- --userDir /data
 ```
 
 2. In case debugging of the Node-RED startup code is required, the  *'debug_brk'* script will instruct Node JS to break at the first statement of the Node-RED application.  The Node JS server can be started in debug mode using following command:
 
 ```
-$ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm nodered/node-red run debug_brk -- --userDir /data
+$ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm dennis14e/node-red run debug_brk -- --userDir /data
 ```
 
 Note that in this case Node JS will wait - at the first statement of the Node-RED application - until a debugger client connects...
@@ -575,7 +578,7 @@ docker run              - run this container, initially building locally if nece
 -v node_red_data:/data  - mount the internal /data to the host mode_red_data directory
 --name mynodered        - give this machine a friendly local name
 --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
-nodered/node-red        - the image to base it on - currently Node-RED v1.1.0
+dennis14e/node-red      - the image to base it on - currently Node-RED v1.1.0
 run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
 --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
 --userDir /data         - instruct the script where the Node-RED data needs to be stored
@@ -595,7 +598,7 @@ on permissions.
 If you are seeing *permission denied* errors opening files or accessing host devices, try running the container as the root user.
 
 ```
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -u root nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -u root dennis14e/node-red
 ```
 
 __References:__
@@ -610,7 +613,7 @@ https://github.com/node-red/node-red/issues/8
 If you want to access a device from the host inside the container, e.g. serial port, use the following command-line flag to pass access through.
 
 ```
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --device=/dev/ttyACM0 nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --device=/dev/ttyACM0 dennis14e/node-red
 ```
 __References:__
 
@@ -621,9 +624,9 @@ https://github.com/node-red/node-red/issues/15
 
 If you want to modify the default timezone, use the TZ environment variable with the [relevant timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 ```
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -e TZ=Europe/London nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -e TZ=Europe/London dennis14e/node-red
 ```
 
 __References:__
 
-https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o
+https://groups.google.com/g/node-red/c/ieo5IVFAo2o
