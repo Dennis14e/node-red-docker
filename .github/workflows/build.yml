@@ -119,3 +119,10 @@ jobs:
             NODE_RED_VERSION=v${{ env.NODE_RED_VERSION }}
             TARGET=${{ env.TARGET }}
             TAG_SUFFIX=${{ matrix.TAG_SUFFIX }}
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.DOCKER_REPO }}
