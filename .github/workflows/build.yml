@@ -88,8 +88,25 @@ jobs:
           # latest-10, latest-10-minimal, latest-12, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
-          # latest
-          [ ${{ matrix.NODE_VERSION }} -eq ${{ env.LATEST_NODE }} ] && [ "${{ matrix.TAG_SUFFIX }}" = "default" ] && TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"
+          echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
+
+      - name: Set Docker tags (latest)
+        if: matrix.NODE_VERSION == env.LATEST_NODE && matrix.TAG_SUFFIX == 'default'
+        run: |
+          TAGS="${{ env.DOCKER_TAGS }}"
+
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}"
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.OS }}"
+
+          echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
+
+      - name: Set Docker tags (latest alpine)
+        if: matrix.NODE_VERSION == env.LATEST_NODE && matrix.TAG_SUFFIX == 'default' && matrix.OS == 'alpine'
+        run: |
+          TAGS="${{ env.DOCKER_TAGS }}"
+
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:${{ env.NODE_RED_VERSION }}"
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"          
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
