@@ -39,17 +39,17 @@ Running that command should give a terminal window with a running instance of No
 Welcome to Node-RED
 ===================
 
-10 Oct 12:57:10 - [info] Node-RED version: v1.3.1
-10 Oct 12:57:10 - [info] Node.js  version: v10.22.1
-10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
-10 Oct 12:57:11 - [info] Loading palette nodes
-10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
-10 Oct 12:57:16 - [info] Context store  : 'default' [module=memory]
-10 Oct 12:57:16 - [info] User directory : /data
-10 Oct 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
-10 Oct 12:57:16 - [info] Flows file     : /data/flows.json
-10 Oct 12:57:16 - [info] Creating new flow file
-10 Oct 12:57:17 - [warn]
+13 Apr 12:31:14 - [info] Node-RED version: v1.3.1
+13 Apr 12:31:14 - [info] Node.js  version: v12.22.1
+13 Apr 12:31:14 - [info] Linux 5.4.0-71-generic x64 LE
+13 Apr 12:31:14 - [info] Loading palette nodes
+13 Apr 12:31:16 - [info] Settings file  : /data/settings.js
+13 Apr 12:31:16 - [info] Context store  : 'default' [module=memory]
+13 Apr 12:31:16 - [info] User directory : /data
+13 Apr 12:31:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
+13 Apr 12:31:16 - [info] Flows file     : /data/flows.json
+13 Apr 12:31:16 - [info] Creating new flow file
+13 Apr 12:31:16 - [warn]
 
 ---------------------------------------------------------------------
 Your flow credentials file is encrypted using a system-generated key.
@@ -63,9 +63,9 @@ your settings file. Node-RED will then re-encrypt your credentials
 file using your chosen key the next time you deploy a change.
 ---------------------------------------------------------------------
 
-10 Oct 12:57:17 - [info] Starting flows
-10 Oct 12:57:17 - [info] Started flows
-10 Oct 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
+13 Apr 12:31:16 - [info] Server now running at http://127.0.0.1:1880/
+13 Apr 12:31:16 - [info] Starting flows
+13 Apr 12:31:16 - [info] Started flows
 
 [...]
 ```
