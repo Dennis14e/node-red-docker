@@ -5,11 +5,15 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
     versioning-strategy: "increase"
