@@ -1,11 +1,12 @@
-name: Build stable images
+name: Build dev images
 
 on:
   push:
     branches:
       - master
-    tags:
+    tags-ignore:
       - v*
+  pull_request:
 
 jobs:
   build:
@@ -15,7 +16,7 @@ jobs:
       BUILD_DATE: unknown
       BUILD_VERSION: unknown
       DOCKER_PUSH: false
-      DOCKER_REPO: dennis14e/node-red
+      DOCKER_REPO: dennis14e/node-red-dev
       DOCKER_TAGS: unknown
       NODE_LATEST: 14
       NODE_RED_VERSION: unknown
@@ -28,9 +29,9 @@ jobs:
           - alpine
           - buster
         NODE_VERSION:
-          - 10
           - 12
           - 14
+          - 16
         TAG_SUFFIX:
           - default
           - minimal
