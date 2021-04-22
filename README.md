@@ -1,6 +1,7 @@
 # Node-RED Docker
 
-[![Build Status](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml)
+[![Build stable images](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/node-red-docker/actions/workflows/build.yml)
+[![Build dev images](https://github.com/Dennis14e/node-red-docker/actions/workflows/build-dev.yml/badge.svg)](https://github.com/Dennis14e/node-red-docker/actions/workflows/build-dev.yml)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/dennis14e/node-red.svg)](https://hub.docker.com/r/dennis14e/node-red/)
 [![DockerHub Stars](https://img.shields.io/docker/stars/dennis14e/node-red.svg?maxAge=2592000)](https://hub.docker.com/r/dennis14e/node-red/)
 
