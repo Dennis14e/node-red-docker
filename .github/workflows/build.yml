@@ -27,9 +27,9 @@ jobs:
           - alpine
           - buster
         NODE_VERSION:
-          - 10
           - 12
           - 14
+          - 16
         TAG_SUFFIX:
           - default
           - minimal
@@ -68,10 +68,10 @@ jobs:
         run: |
           TAGS=""
 
-          # v1.2.3-10-alpine, v1.2.3-10-alpine-minimal, v1.2.3-10-buster, v1.2.3-10-buster-minimal, v1.2.3-12-alpine, [...]
+          # v1.2.3-12-alpine, v1.2.3-12-alpine-minimal, v1.2.3-12-buster, v1.2.3-12-buster-minimal, v1.2.3-14-alpine, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
-          # latest-10-alpine, latest-10-alpine-minimal, latest-10-buster, latest-10-buster-minimal, latest-12-alpine, [...]
+          # latest-12-alpine, latest-12-alpine-minimal, latest-12-buster, latest-12-buster-minimal, latest-14-alpine, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
@@ -81,10 +81,10 @@ jobs:
         run: |
           TAGS="${{ env.DOCKER_TAGS }}"
 
-          # v1.2.3-10, v1.2.3-10-minimal, v1.2.3-12, [...]
+          # v1.2.3-12, v1.2.3-12-minimal, v1.2.3-14, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
-          # latest-10, latest-10-minimal, latest-12, [...]
+          # latest-12, latest-12-minimal, latest-14, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}${{ env.TAG_SUFFIX }}"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
