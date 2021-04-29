@@ -1,29 +1,29 @@
 ARG NODE_VERSION=14
+ARG DEBIAN_FRONTEND=noninteractive
 
 #### Stage BASE ########################################################################################################
 FROM node:${NODE_VERSION}-buster-slim AS base
 
 # Copy scripts
-COPY .docker/scripts/*.sh /tmp/
-COPY .docker/healthcheck.js /
+COPY scripts/buster/* /tmp/
+COPY scripts/healthcheck.js /
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
     apt-get update && \
     apt-get install -y \
         bash \
-        tzdata \
+        ca-certificates \
         curl \
-        nano \
-        wget \
         git \
-        openssl \
+        nano \
         openssh-client \
-        ca-certificates && \
+        openssl \
+        tzdata \
+        wget && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
-    # adduser --home /usr/src/node-red --disabled-password --no-create-home node-red --uid 1000 && \
-    useradd --home-dir /usr/src/node-red --uid 1000 node-red && \
+    adduser --home /usr/src/node-red --disabled-password --no-create-home --uid 1000 node-red && \
     chown -R node-red:root /data && chmod -R g+rwX /data && \
     chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
     # chown -R node-red:node-red /data && \
@@ -41,13 +41,14 @@ FROM base AS build
 
 # Install Build tools
 RUN apt-get update && \
-    apt-get install -y build-essential python && \
+    apt-get install -y build-essential python2 python3 && \
+    rm -rf /var/lib/apt/lists/* && \
     npm install --unsafe-perm --no-update-notifier --no-audit --no-fund --only=production && \
-    npm uninstall node-red-node-gpio && \
-    cp -R node_modules prod_node_modules
+    npm uninstall node-red-node-gpio
 
 #### Stage RELEASE #####################################################################################################
 FROM base AS RELEASE
+
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
@@ -55,7 +56,7 @@ ARG NODE_RED_VERSION
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile="Dockerfile.debian" \
+    org.label-schema.docker.dockerfile="Dockerfile.buster" \
     org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
@@ -66,11 +67,11 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
-COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
+COPY --from=build /usr/src/node-red/node_modules ./node_modules
 
-# Chown, install devtools & Clean up
+# Chown & install devtools
 RUN chown -R node-red:root /usr/src/node-red && \
-    apt-get update && apt-get install -y build-essential python-dev python3 && \
+    /tmp/install-devtools.sh && \
     rm -r /tmp/*
 
 USER node-red
