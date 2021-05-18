@@ -88,6 +88,6 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 EXPOSE 1880
 
 # Add a healthcheck (default every 30 secs)
-HEALTHCHECK CMD node /app/healthcheck.js
+HEALTHCHECK CMD node /app/scripts/healthcheck.js
 
 ENTRYPOINT ["npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
