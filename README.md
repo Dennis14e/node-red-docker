@@ -108,7 +108,7 @@ This makes it more easy to deploy in a multi architecture Docker environment. E.
 
 The tag naming convention is `v<node-red-version>-<node-version>-<os>-<image-type>-<architecture>`, where:
 - `<node-red-version>` is the Node-RED version.
-- `<node-version>` is the Node JS version.
+- `<node-version>` is the Node.js version.
 - `<os>` is the os of the base image and is optional, can be either _none_, alpine or buster.
     - _none_ : is the default base image (alpine)
     - alpine : uses node:`<node-version>`-alpine as base image
@@ -125,7 +125,7 @@ For example - to run the latest minimal version, you would run:
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered dennis14e/node-red:latest-minimal
 ```
 
-The default Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
+The default Node-RED images are based on [official Node.js Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
 Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation.
 If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or try using the Debian Buster based images.
 
@@ -216,7 +216,7 @@ All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-in
 
 
 ## Raspberry PI - native GPIO support
-| v1.0 - BREAKING: Native GPIO support for Raspberry PI has been dropped |
+| v1.0 - BREAKING: Native GPIO support for Raspberry Pi has been dropped |
 | --- |
 The replacement for native GPIO is [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod).
 
@@ -555,23 +555,23 @@ services:
 
 ## Debugging containers
 
-Sometimes it is useful to debug the code which is running inside the container.  Two scripts (*'debug'* and *'debug_brk'* in the package.json file) are available to start Node JS in debug mode, which means that Node JS will start listening (to port 9229) for a debug client. Various remote debugger tools (like Visual Code, Chrome Developer Tools ...) can be used to debug a Node-RED application.  A [wiki](https://github.com/node-red/node-red-docker/wiki/Debug-container-via-Chrome-Developer-Tools) page has been provided, to explain step-by-step how to use the Chrome Developer Tools debugger.
+Sometimes it is useful to debug the code which is running inside the container.  Two scripts (*'debug'* and *'debug_brk'* in the package.json file) are available to start Node.js in debug mode, which means that Node.js will start listening (to port 9229) for a debug client. Various remote debugger tools (like Visual Code, Chrome Developer Tools ...) can be used to debug a Node-RED application.  A [wiki](https://github.com/node-red/node-red-docker/wiki/Debug-container-via-Chrome-Developer-Tools) page has been provided, to explain step-by-step how to use the Chrome Developer Tools debugger.
 
-1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is fully up-and-running (i.e. when the application startup code is not relevant).  The Node JS server can be started in debug mode using following command:
+1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is fully up-and-running (i.e. when the application startup code is not relevant).  The Node.js server can be started in debug mode using following command:
 
 ```
 $ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm dennis14e/node-red run debug -- --userDir /data
 ```
 
-2. In case debugging of the Node-RED startup code is required, the  *'debug_brk'* script will instruct Node JS to break at the first statement of the Node-RED application.  The Node JS server can be started in debug mode using following command:
+2. In case debugging of the Node-RED startup code is required, the  *'debug_brk'* script will instruct Node.js to break at the first statement of the Node-RED application.  The Node.js server can be started in debug mode using following command:
 
 ```
 $ docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm dennis14e/node-red run debug_brk -- --userDir /data
 ```
 
-Note that in this case Node JS will wait - at the first statement of the Node-RED application - until a debugger client connects...
+Note that in this case Node.js will wait - at the first statement of the Node-RED application - until a debugger client connects...
 
-As soon as Node JS is listening to the debug port, this will be shown in the startup log:
+As soon as Node.js is listening to the debug port, this will be shown in the startup log:
 ```
 Debugger listening on ws://0.0.0.0:9229/...
 ```
