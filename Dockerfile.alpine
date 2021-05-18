@@ -3,10 +3,6 @@ ARG NODE_VERSION=14
 #### Stage BASE ########################################################################################################
 FROM node:${NODE_VERSION}-alpine AS base
 
-# Copy scripts
-COPY scripts/alpine/* /tmp/
-COPY scripts/healthcheck.js /
-
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
     apk add --no-cache \
@@ -65,12 +61,16 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
-COPY --from=build /usr/src/node-red/node_modules ./node_modules
+COPY --chown=node-red:root --from=build /usr/src/node-red/node_modules ./node_modules
 
-# Chown & install devtools
-RUN chown -R node-red:root /usr/src/node-red && \
-    /tmp/install-devtools.sh && \
-    rm -r /tmp/*
+# Copy scripts
+RUN mkdir -p /app/scripts
+COPY scripts/common/* scripts/alpine/* /app/scripts/
+RUN chown node-red:root /app/scripts/* && \
+    chmod 775 /app/scripts/*
+
+# Install devtools
+RUN /app/scripts/install-devtools.sh
 
 USER node-red
 
@@ -86,6 +86,6 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 EXPOSE 1880
 
 # Add a healthcheck (default every 30 secs)
-HEALTHCHECK CMD node /healthcheck.js
+HEALTHCHECK CMD node /app/healthcheck.js
 
 ENTRYPOINT ["npm", "--no-update-notifier", "--no-fund", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
