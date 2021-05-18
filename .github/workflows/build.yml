@@ -13,7 +13,7 @@ jobs:
     env:
       BUILD_DATE: unknown
       BUILD_VERSION: unknown
-      DOCKER_PUSH: false
+      DOCKER_PUSH: true
       DOCKER_REPO: dennis14e/node-red
       DOCKER_TAGS: unknown
       NODE_LATEST: 14
@@ -45,10 +45,6 @@ jobs:
           TAG_SUFFIX="-${{ matrix.TAG_SUFFIX }}"
           [ "$TAG_SUFFIX" = "-default" ] && TAG_SUFFIX=""
           echo "TAG_SUFFIX=$TAG_SUFFIX" >> $GITHUB_ENV
-
-      - name: Set DOCKER_PUSH if the origin is this repository
-        if: github.ref == 'refs/heads/master' && contains(github.event.head_commit.message, '[skip-push]') != true
-        run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
       - name: Remove linux/arm/v6 from buster build
         if: matrix.OS == 'buster'
