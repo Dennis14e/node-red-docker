@@ -133,49 +133,24 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
 |----------------------------|----------|----------|------------|---------|------------------------|
-| 1.3.4-14                   |    14    | amd64    |   2.x 3.x  |   yes   | node:14-alpine         |
-| 1.3.4-14-alpine            |          | arm32v6  |            |         |                        |
-| latest-14                  |          | arm32v7  |            |         |                        |
-| latest                     |          | arm64v8  |            |         |                        |
+| v1.3.4-12                  |    12    | amd64    |   2.x 3.x  |   yes   | node:12-alpine         |
+| latest-12                  |          | arm32v6  |            |         |                        |
+| v1.3.4-12-alpine           |          | arm32v7  |            |         |                        |
+| latest-12-alpine           |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
 |                            |          |          |            |         |                        |
-| 1.3.4-14-minimal           |    14    | amd64    |     no     |   no    | node:14-alpine         |
-| 1.3.4-14-alpine-minimal    |          | arm32v6  |            |         |                        |
-| latest-14-minimal          |          | arm32v7  |            |         |                        |
-| latest-minimal             |          | arm64v8  |            |         |                        |
+| v1.3.4-12-minimal          |    12    | amd64    |     no     |   no    | node:12-alpine         |
+| latest-12-minimal          |          | arm32v6  |            |         |                        |
+| v1.3.4-12-alpine-minimal   |          | arm32v7  |            |         |                        |
+| latest-12-alpine-minimal   |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
 |                            |          |          |            |         |                        |
-| 1.3.4-14-buster            |    14    | amd64    |   2.x 3.x  |   yes   | node:14-buster-slim    |
-| latest-14-buster           |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| 1.3.4-14-buster-minimal    |    14    | amd64    |     no     |   no    | node:14-buster-slim    |
-| latest-14-buster-minimal   |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-
-
-| **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
-|----------------------------|----------|----------|------------|---------|------------------------|
-| 1.3.4-12                   |    12    | amd64    |   2.x 3.x  |   yes   | node:12-alpine         |
-| 1.3.4-12-alpine            |          | arm32v6  |            |         |                        |
-| latest-12                  |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| 1.3.4-12-minimal           |    12    | amd64    |     no     |   no    | node:12-alpine         |
-| 1.3.4-12-alpine-minimal    |          | arm32v6  |            |         |                        |
-| latest-12-minimal          |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| 1.3.4-12-buster            |    12    | amd64    |   2.x 3.x  |   yes   | node:12-buster-slim    |
+| v1.3.4-12-buster           |    12    | amd64    |   2.x 3.x  |   yes   | node:12-buster-slim    |
 | latest-12-buster           |          | arm32v7  |            |         |                        |
 |                            |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
 |                            |          |          |            |         |                        |
-| 1.3.4-12-buster-minimal    |    12    | amd64    |     no     |   no    | node:12-buster-slim    |
+| v1.3.4-12-buster-minimal   |    12    | amd64    |     no     |   no    | node:12-buster-slim    |
 | latest-12-buster-minimal   |          | arm32v7  |            |         |                        |
 |                            |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
@@ -183,25 +158,56 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
 |----------------------------|----------|----------|------------|---------|------------------------|
-| 1.3.4-10                   |    10    | amd64    |   2.x 3.x  |   yes   | node:10-alpine         |
-| 1.3.4-10-alpine            |          | arm32v6  |            |         |                        |
-| latest-10                  |          | arm32v7  |            |         |                        |
+| v1.3.4                     |    14    | amd64    |   2.x 3.x  |   yes   | node:14-alpine         |
+| latest                     |          | arm32v6  |            |         |                        |
+| v1.3.4-alpine              |          | arm32v7  |            |         |                        |
+| latest-alpine              |          | arm64v8  |            |         |                        |
+| v1.3.4-14                  |          | s390x    |            |         |                        |
+| latest-14                  |          |          |            |         |                        |
+| v1.3.4-14-alpine           |          |          |            |         |                        |
+| latest-14-alpine           |          |          |            |         |                        |
+|                            |          |          |            |         |                        |
+| v1.3.4-minimal             |    14    | amd64    |     no     |   no    | node:14-alpine         |
+| latest-minimal             |          | arm32v6  |            |         |                        |
+| v1.3.4-alpine-minimal      |          | arm32v7  |            |         |                        |
+| latest-alpine-minimal      |          | arm64v8  |            |         |                        |
+| v1.3.4-14-minimal          |          | s390x    |            |         |                        |
+| latest-14-minimal          |          |          |            |         |                        |
+| v1.3.4-14-alpine-minimal   |          |          |            |         |                        |
+| latest-14-alpine-minimal   |          |          |            |         |                        |
+|                            |          |          |            |         |                        |
+| v1.3.4-buster              |    14    | amd64    |   2.x 3.x  |   yes   | node:14-buster-slim    |
+| latest-buster              |          | arm32v7  |            |         |                        |
+| v1.3.4-14-buster           |          | arm64v8  |            |         |                        |
+| latest-14-buster           |          | s390x    |            |         |                        |
+|                            |          |          |            |         |                        |
+| v1.3.4-buster-minimal      |    14    | amd64    |     no     |   no    | node:14-buster-slim    |
+| latest-buster-minimal      |          | arm32v7  |            |         |                        |
+| v1.3.4-14-buster-minimal   |          | arm64v8  |            |         |                        |
+| latest-14-buster-minimal   |          | s390x    |            |         |                        |
+
+
+| **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
+|----------------------------|----------|----------|------------|---------|------------------------|
+| v1.3.4-16                  |    16    | amd64    |   2.x 3.x  |   yes   | node:16-alpine         |
+| latest-16                  |          | arm32v6  |            |         |                        |
+| v1.3.4-16-alpine           |          | arm32v7  |            |         |                        |
+| latest-16-alpine           |          | arm64v8  |            |         |                        |
+|                            |          | s390x    |            |         |                        |
+|                            |          |          |            |         |                        |
+| v1.3.4-16-minimal          |    16    | amd64    |     no     |   no    | node:16-alpine         |
+| latest-16-minimal          |          | arm32v6  |            |         |                        |
+| v1.3.4-16-alpine-minimal   |          | arm32v7  |            |         |                        |
+| latest-16-alpine-minimal   |          | arm64v8  |            |         |                        |
+|                            |          | s390x    |            |         |                        |
+|                            |          |          |            |         |                        |
+| v1.3.4-16-buster           |    16    | amd64    |   2.x 3.x  |   yes   | node:16-buster-slim    |
+| latest-16-buster           |          | arm32v7  |            |         |                        |
 |                            |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
 |                            |          |          |            |         |                        |
-| 1.3.4-10-minimal           |    10    | amd64    |     no     |   no    | node:10-alpine         |
-| 1.3.4-10-alpine-minimal    |          | arm32v6  |            |         |                        |
-| latest-10-minimal          |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| 1.3.4-10-buster            |    10    | amd64    |   2.x 3.x  |   yes   | node:10-buster-slim    |
-| latest-10-buster           |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| 1.3.4-10-buster-minimal    |    10    | amd64    |     no     |   no    | node:10-buster-slim    |
-| latest-10-buster-minimal   |          | arm32v7  |            |         |                        |
+| v1.3.4-16-buster-minimal   |    16    | amd64    |     no     |   no    | node:16-buster-slim    |
+| latest-16-buster-minimal   |          | arm32v7  |            |         |                        |
 |                            |          | arm64v8  |            |         |                        |
 |                            |          | s390x    |            |         |                        |
 

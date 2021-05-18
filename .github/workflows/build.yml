@@ -26,9 +26,9 @@ jobs:
           - alpine
           - buster
         NODE_VERSION:
-          - 10
           - 12
           - 14
+          - 16
         TAG_SUFFIX:
           - default
           - minimal
