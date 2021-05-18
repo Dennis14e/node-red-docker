@@ -88,24 +88,25 @@ jobs:
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
       - name: Set Docker tags (latest)
-        if: matrix.NODE_VERSION == env.NODE_LATEST && matrix.TAG_SUFFIX == 'default'
+        if: matrix.NODE_VERSION == env.NODE_LATEST
         run: |
           TAGS="${{ env.DOCKER_TAGS }}"
 
-          # v1.2.3-alpine, v1.2.3-buster, latest-alpine, latest-buster
-          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}"
-          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.OS }}"
+          # v1.2.3-alpine, v1.2.3-alpine-minimal, v1.2.3-buster, v1.2.3-buster-minimal
+          # latest-alpine, latest-alpine-minimal, latest-buster, latest-buster-minimal
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
       - name: Set Docker tags (latest alpine)
-        if: matrix.NODE_VERSION == env.NODE_LATEST && matrix.TAG_SUFFIX == 'default' && matrix.OS == 'alpine'
+        if: matrix.NODE_VERSION == env.NODE_LATEST && matrix.OS == 'alpine'
         run: |
           TAGS="${{ env.DOCKER_TAGS }}"
 
-          # v1.2.3, latest
-          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}"
-          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest"
+          # v1.2.3 v1.2.3-minimal, latest, latest-minimal
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}${{ env.TAG_SUFFIX }}"
+          TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest${{ env.TAG_SUFFIX }}"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
