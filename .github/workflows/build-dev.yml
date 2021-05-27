@@ -119,7 +119,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.DOCKER_REPO }}-v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}-
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1.1.0
+        uses: docker/setup-qemu-action@v1.2.0
         with:
           platforms: ${{ env.PLATFORMS }}
 
