@@ -6,7 +6,7 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/node-red/node-red-docker.git"
+        "url": "https://github.com/dennis14e/node-red-docker.git"
     },
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
@@ -26,12 +26,15 @@
         },
         {
             "name": "Raymond Mouthaan"
+        },
+        {
+            "name": "Dennis Neufeld"
         }
     ],
     "dependencies": {
         "node-red": "1.3.5"
     },
     "engines": {
-        "node": ">=10"
+        "node": ">=12"
     }
 }
