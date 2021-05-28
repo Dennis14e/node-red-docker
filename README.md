@@ -585,9 +585,8 @@ docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -u root denn
 
 __References:__
 
-https://github.com/node-red/node-red/issues/15
-
-https://github.com/node-red/node-red/issues/8
+- https://github.com/node-red/node-red-docker/issues/8
+- https://github.com/node-red/node-red-docker/issues/15
 
 
 ### Accessing Host Devices
@@ -599,8 +598,8 @@ docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --device=/de
 ```
 __References:__
 
-https://github.com/node-red/node-red/issues/15
-
+- https://github.com/node-red/node-red-docker/issues/15
+- https://github.com/node-red/node-red-docker/issues/154
 
 ### Setting Timezone
 
@@ -611,4 +610,4 @@ docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -e TZ=Europe
 
 __References:__
 
-https://groups.google.com/g/node-red/c/ieo5IVFAo2o
+- https://github.com/node-red/node-red-docker/issues/92
