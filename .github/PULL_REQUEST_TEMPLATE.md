@@ -1,7 +1,7 @@
 <!--
 ## Before you hit that Submit button....
 
-Please read our [contribution guidelines](https://github.com/node-red/node-red/blob/master/CONTRIBUTING.md)
+Please read our [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/master/CONTRIBUTING.md)
 before submitting a pull-request.
 
 ## Types of changes
@@ -16,8 +16,7 @@ Put an `x` in the boxes that apply
 <!--
 If you want to raise a pull-request with a new feature, or a refactoring
 of existing code, it **may well get rejected** if it hasn't been discussed on
-the [forum](https://discourse.nodered.org) or
-[slack team](https://nodered.org/slack) first.
+the [General discussion page](https://github.com/Dennis14e/node-red-docker/discussions/categories/general) first.
 
 -->
 
@@ -28,7 +27,5 @@ the [forum](https://discourse.nodered.org) or
 ## Checklist
 <!-- Put an `x` in the boxes that apply -->
 
-- [ ] I have read the [contribution guidelines](https://github.com/node-red/node-red/blob/master/CONTRIBUTING.md)
-- [ ] For non-bugfix PRs, I have discussed this change on the mailing list/slack team.
-- [ ] I have run `grunt` to verify the unit tests pass
-- [ ] I have added suitable unit tests to cover the new/changed functionality
+- [ ] I have read the [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/master/CONTRIBUTING.md)
+- [ ] For non-bugfix PRs, I have discussed this change on the General discussion page.

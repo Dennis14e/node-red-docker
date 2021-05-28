@@ -8,12 +8,6 @@
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6*, arm32v7, arm64v8 and s390x - *there is no arm32v6 build for Debian Buster based images).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
-**Note**: In version 1.2 we removed the named VOLUME from the build. It should not affect many users - but the details are [here](volumechanges.md).
-
-As of Node-RED 1.0 this project provides the build for the `dennis14e/node-red` container on [Docker Hub](https://hub.docker.com/r/dennis14e/node-red/).
-
-Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
-
 
 ## Quick Start
 To run in Docker in its simplest form just run:
@@ -106,16 +100,20 @@ $ docker stop mynodered
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
 
-The tag naming convention is `v<node-red-version>-<node-version>-<os>-<image-type>-<architecture>`, where:
-- `<node-red-version>` is the Node-RED version.
-- `<node-version>` is the Node.js version.
+The tag naming convention is `v<node-red-version>-<node-version>-<os>-<image-type>`, where:
+- `<node-red-version>` is the Node-RED version, can be either latest or v`<node-red-version>`.
+  - latest : is the current Node-RED version (currently 1.3.5)
+  - v`<node-red-version>` : is a specific Node-RED version (e.g. v1.3.4)
+- `<node-version>` is the Node.js version and is optional, can be either _none_, 12, 14 or 16.
+  - _none_ : is the default Node.js version (14)
+  - 12, 14, 16 : is Node.js version 12, 14, 16
 - `<os>` is the os of the base image and is optional, can be either _none_, alpine or buster.
-    - _none_ : is the default base image (alpine)
-    - alpine : uses node:`<node-version>`-alpine as base image
-    - buster : uses node:`<node-version>`-buster-slim as base image
+  - _none_ : is the default base image (alpine)
+  - alpine : uses node:`<node-version>`-alpine as base image
+  - buster : uses node:`<node-version>`-buster-slim as base image
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
-    - _none_ : is the default and has Python 2 & Python 3 + devtools installed
-    - minimal : has no Python installed and no devtools installed
+  - _none_ : is the default and has Python 2 & Python 3 + devtools installed
+  - minimal : has no Python installed and no devtools installed
 
 The minimal versions (without python and build tools) are not able to install nodes that require any locally compiled native code.
 
@@ -213,30 +211,6 @@ The following table shows the variety of provided Node-RED images.
 
 
 All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
-
-
-## Raspberry PI - native GPIO support
-| v1.0 - BREAKING: Native GPIO support for Raspberry Pi has been dropped |
-| --- |
-The replacement for native GPIO is [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod).
-
-Disadvantages of the native GPIO support are:
-- Your Docker container needs to be deployed on the same Docker node/host on which you want to control the gpio.
-- Gain access to `/dev/mem` of your Docker node/host
-- privileged=true is not supported for `docker stack` command
-
-`node-red-node-pi-gpiod` fixes all these disadvantages. With `node-red-node-pi-gpiod` it is possible to interact with gpio of multiple Raspberry Pi's from a single Node-RED container, and for multiple containers to access different gpio on the same Pi.
-
-
-### Quick Migration steps to `node-red-node-pi-gpiod`
-  1. Install `node-red-node-pi-gpiod` through the Node-RED palette
-  2. Install and run `PiGPIOd daemon` on the host Pi.
-  3. Replace all native gpio nodes with `pi gpiod` nodes.
-  4. Configure `pi gpiod` nodes to connect to `PiGPIOd daemon`. Often the host machine will have an IP 172.17.0.1 port 8888 - but not always. You can use `docker exec -it mynodered ip route show default | awk '/default/ {print $3}'` to check.
-
-For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)
-
-**Note**: There is a contributed [gpiod project](https://github.com/corbosman/node-red-gpiod) that runs the gpiod in its own container rather than on the host if required.
 
 
 ## Managing User Data
@@ -488,7 +462,7 @@ CONTAINER ID        IMAGE                            COMMAND             CREATED
 ```
 
 You can now point a browser to the host machine on the tcp port reported back, so in the example
-above browse to  `http://{host-ip}:49154`
+above browse to `http://{host-ip}:49154`
 
 **NOTE**: as this does not mount the `/data` volume externally any changes to flows will not be saved and if the container is redeployed or upgraded these will be lost. The volume may persist on the host filing sysem and can probably be retrieved and remounted if required.
 
@@ -586,7 +560,7 @@ docker run              - run this container, initially building locally if nece
 -v node_red_data:/data  - mount the internal /data to the host mode_red_data directory
 --name mynodered        - give this machine a friendly local name
 --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
-dennis14e/node-red      - the image to base it on - currently Node-RED v1.1.0
+dennis14e/node-red      - the image to base it on - currently Node-RED v1.3.5
 run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
 --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
 --userDir /data         - instruct the script where the Node-RED data needs to be stored

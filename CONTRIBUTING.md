@@ -1,4 +1,4 @@
-# Contributing to Node-RED
+# Contributing to Node-RED Docker
 
 We welcome contributions, but request you follow these guidelines.
 
@@ -7,8 +7,7 @@ We welcome contributions, but request you follow these guidelines.
  - [Pull-Requests](#pull-requests)
 
 This project adheres to the [Contributor Covenant 1.4](http://contributor-covenant.org/version/1/4/).
-By participating, you are expected to uphold this code. Please report unacceptable
-behavior to the project's core team at team@nodered.org.
+By participating, you are expected to uphold this code.
 
 ## Raising issues
 
@@ -25,25 +24,17 @@ relevant nodes, press Ctrl-E and copy the flow data from the Export dialog.
 At a minimum, please include:
 
  - Version of Node-RED - either release number if you downloaded a zip, or the first few lines of `git log` if you are cloning the repository directly.
- - Version of node.js - what does `node -v` say?
+ - Version of Node.js - what does `node -v` say?
 
 ## Feature requests
 
-For feature requests, please raise them on the [mailing list](https://discourse.nodered.org).
+For feature requests, please raise them on the [Ideas discussion page](https://github.com/Dennis14e/node-red-docker/discussions/categories/ideas).
 
 ## Pull-Requests
 
 If you want to raise a pull-request with a new feature, or a refactoring
 of existing code, it may well get rejected if you haven't discussed it on
-the [forum](https://discourse.nodered.org) first.
-
-All contributors need to sign the JS Foundation's Contributor License Agreement.
-It is an online process and quick to do. You can read the details of the agreement
-here: https://cla.js.foundation/node-red/node-red.
-
-If you raise a pull-request without having signed the CLA, you will be prompted
-to do so automatically.
-
+the [General discussion page](https://github.com/Dennis14e/node-red-docker/discussions/categories/general) first.
 
 ### Coding standards
 
