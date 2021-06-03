@@ -1,7 +1,7 @@
 <!--
 ## Before you hit that Submit button....
 
-Please read our [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/master/CONTRIBUTING.md)
+Please read our [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/main/CONTRIBUTING.md)
 before submitting a pull-request.
 
 ## Types of changes
@@ -27,5 +27,5 @@ the [General discussion page](https://github.com/Dennis14e/node-red-docker/discu
 ## Checklist
 <!-- Put an `x` in the boxes that apply -->
 
-- [ ] I have read the [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [contribution guidelines](https://github.com/Dennis14e/node-red-docker/blob/main/CONTRIBUTING.md)
 - [ ] For non-bugfix PRs, I have discussed this change on the General discussion page.

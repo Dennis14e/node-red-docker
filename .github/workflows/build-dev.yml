@@ -3,7 +3,7 @@ name: Build dev images
 on:
   push:
     branches:
-      - master
+      - main
     tags-ignore:
       - v*
   pull_request:
@@ -50,7 +50,7 @@ jobs:
           echo "TAG_SUFFIX=$TAG_SUFFIX" >> $GITHUB_ENV
 
       - name: Set DOCKER_PUSH if the origin is this repository
-        if: github.ref == 'refs/heads/master' && contains(github.event.head_commit.message, '[skip-push]') != true
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[skip-push]') != true
         run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
       - name: Remove linux/arm/v6 from buster build

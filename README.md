@@ -5,8 +5,17 @@
 [![DockerHub Pull](https://img.shields.io/docker/pulls/dennis14e/node-red.svg)](https://hub.docker.com/r/dennis14e/node-red/)
 [![DockerHub Stars](https://img.shields.io/docker/stars/dennis14e/node-red.svg?maxAge=2592000)](https://hub.docker.com/r/dennis14e/node-red/)
 
-This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6*, arm32v7, arm64v8 and s390x - *there is no arm32v6 build for Debian Buster based images).
+This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures.
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
+
+
+## Supported architectures
+
+- amd64
+- arm32v6 (no debian images, see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
+- arm32v7
+- arm64v8
+- s390x
 
 
 ## Quick Start
