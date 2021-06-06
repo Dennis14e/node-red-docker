@@ -1,7 +1,8 @@
 ARG NODE_VERSION=14
 ARG DEBIAN_FRONTEND=noninteractive
 
-#### Stage BASE ########################################################################################################
+
+## Stage base
 FROM node:${NODE_VERSION}-buster-slim AS base
 
 # Install tools, create Node-RED app and data dir, add user and set rights
@@ -22,8 +23,6 @@ RUN set -ex && \
     adduser --home /usr/src/node-red --disabled-password --no-create-home --uid 1000 node-red && \
     chown -R node-red:root /data && chmod -R g+rwX /data && \
     chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
-    # chown -R node-red:node-red /data && \
-    # chown -R node-red:node-red /usr/src/node-red
 
 # Set work directory
 WORKDIR /usr/src/node-red
@@ -32,7 +31,8 @@ WORKDIR /usr/src/node-red
 COPY package.json .
 COPY flows.json /data
 
-#### Stage BUILD #######################################################################################################
+
+## Stage build
 FROM base AS build
 
 # Install Build tools
@@ -42,8 +42,9 @@ RUN apt-get update && \
     npm install --unsafe-perm --no-update-notifier --no-audit --no-fund --only=production && \
     npm uninstall node-red-node-gpio
 
-#### Stage RELEASE #####################################################################################################
-FROM base AS RELEASE
+
+## Stage release
+FROM base AS release
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
@@ -60,8 +61,8 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.url="https://nodered.org" \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
-    org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
-    authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
+    org.label-schema.vcs-url="https://github.com/Dennis14e/node-red-docker" \
+    authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan, Dennis Neufeld"
 
 COPY --chown=node-red:root --from=build /usr/src/node-red/node_modules ./node_modules
 
