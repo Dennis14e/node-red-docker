@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
+      BUILD_DATE: unknown
       DOCKER_PUSH: true
       DOCKER_REPO: dennis14e/node-red
       DOCKER_TAGS: unknown
@@ -32,6 +33,9 @@ jobs:
           - default
           - minimal
     steps:
+      - name: Set BUILD_DATE environment variable
+        run: echo "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+
       - name: Set TAG_SUFFIX environment variable
         run: |
           TAG_SUFFIX="-${{ matrix.TAG_SUFFIX }}"
@@ -130,7 +134,7 @@ jobs:
           push: ${{ env.DOCKER_PUSH }}
           tags: ${{ env.DOCKER_TAGS }}
           build-args: |
-            BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+            BUILD_DATE=${{ env.BUILD_DATE }}
             BUILD_VERSION=${{ github.run_id }}
             BUILD_REF=${{ github.sha }}
             NODE_VERSION=${{ matrix.NODE_VERSION }}

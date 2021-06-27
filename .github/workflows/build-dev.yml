@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
+      BUILD_DATE: unknown
       DOCKER_PUSH: false
       DOCKER_REPO: dennis14e/node-red-dev
       DOCKER_TAGS: unknown
@@ -38,6 +39,9 @@ jobs:
       - name: Set DOCKER_PUSH if the origin is this repository
         if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[skip-push]') != true
         run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
+
+      - name: Set BUILD_DATE environment variable
+        run: echo "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
       - name: Set TAG_SUFFIX environment variable
         run: |
@@ -137,7 +141,7 @@ jobs:
           push: ${{ env.DOCKER_PUSH }}
           tags: ${{ env.DOCKER_TAGS }}
           build-args: |
-            BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+            BUILD_DATE=${{ env.BUILD_DATE }}
             BUILD_VERSION=${{ github.run_id }}
             BUILD_REF=${{ github.sha }}
             NODE_VERSION=${{ matrix.NODE_VERSION }}
