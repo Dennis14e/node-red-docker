@@ -11,11 +11,18 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 
 ## Supported architectures
 
-- amd64
-- arm32v6 (no debian images, see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
-- arm32v7
-- arm64v8
-- s390x
+- Alpine images (default)
+  - `amd64`
+  - `arm32v6`
+  - `arm32v7`
+  - `arm64v8`
+  - `s390x`
+
+- Debian Buster images (see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
+  - `arm64`
+  - `arm32v7`
+  - `arm64v8`
+  - `s390x`
 
 
 ## Quick Start
@@ -138,85 +145,79 @@ If you want to add dependencies with native dependencies, extend the Node-RED im
 
 The following table shows the variety of provided Node-RED images.
 
-| **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
-|----------------------------|----------|----------|------------|---------|------------------------|
-| v1.3.5-12                  |    12    | amd64    |   2.x 3.x  |   yes   | node:12-alpine         |
-| latest-12                  |          | arm32v6  |            |         |                        |
-| v1.3.5-12-alpine           |          | arm32v7  |            |         |                        |
-| latest-12-alpine           |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-12-minimal          |    12    | amd64    |     no     |   no    | node:12-alpine         |
-| latest-12-minimal          |          | arm32v6  |            |         |                        |
-| v1.3.5-12-alpine-minimal   |          | arm32v7  |            |         |                        |
-| latest-12-alpine-minimal   |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-12-buster           |    12    | amd64    |   2.x 3.x  |   yes   | node:12-buster-slim    |
-| latest-12-buster           |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-12-buster-minimal   |    12    | amd64    |     no     |   no    | node:12-buster-slim    |
-| latest-12-buster-minimal   |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
+- Alpine, Node 12, Python 2 + 3, based on `node:12-alpine`
+  - `v1.3.5-12`
+  - `latest-12`
+  - `v1.3.5-12-alpine`
+  - `latest-12-alpine`
+
+- Alpine, Node 12, based on `node:12-alpine`
+  - `v1.3.5-12-minimal`
+  - `latest-12-minimal`
+  - `v1.3.5-12-alpine-minimal`
+  - `latest-12-alpine-minimal`
+
+- Debian Buster, Node 12, Python 2 + 3, based on `node:12-buster-slim`
+  - `v1.3.5-12-buster`
+  - `latest-12-buster`
+
+- Debian Buster, Node 12, based on `node:12-buster-slim`
+  - `v1.3.5-12-buster-minimal`
+  - `latest-12-buster-minimal`
 
 
-| **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
-|----------------------------|----------|----------|------------|---------|------------------------|
-| v1.3.5                     |    14    | amd64    |   2.x 3.x  |   yes   | node:14-alpine         |
-| latest                     |          | arm32v6  |            |         |                        |
-| v1.3.5-alpine              |          | arm32v7  |            |         |                        |
-| latest-alpine              |          | arm64v8  |            |         |                        |
-| v1.3.5-14                  |          | s390x    |            |         |                        |
-| latest-14                  |          |          |            |         |                        |
-| v1.3.5-14-alpine           |          |          |            |         |                        |
-| latest-14-alpine           |          |          |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-minimal             |    14    | amd64    |     no     |   no    | node:14-alpine         |
-| latest-minimal             |          | arm32v6  |            |         |                        |
-| v1.3.5-alpine-minimal      |          | arm32v7  |            |         |                        |
-| latest-alpine-minimal      |          | arm64v8  |            |         |                        |
-| v1.3.5-14-minimal          |          | s390x    |            |         |                        |
-| latest-14-minimal          |          |          |            |         |                        |
-| v1.3.5-14-alpine-minimal   |          |          |            |         |                        |
-| latest-14-alpine-minimal   |          |          |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-buster              |    14    | amd64    |   2.x 3.x  |   yes   | node:14-buster-slim    |
-| latest-buster              |          | arm32v7  |            |         |                        |
-| v1.3.5-14-buster           |          | arm64v8  |            |         |                        |
-| latest-14-buster           |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-buster-minimal      |    14    | amd64    |     no     |   no    | node:14-buster-slim    |
-| latest-buster-minimal      |          | arm32v7  |            |         |                        |
-| v1.3.5-14-buster-minimal   |          | arm64v8  |            |         |                        |
-| latest-14-buster-minimal   |          | s390x    |            |         |                        |
+- Alpine Node 14, Python 2 + 3, based on `node:14-alpine`
+  - `v1.3.5`
+  - **`latest`**
+  - `v1.3.5-alpine`
+  - `latest-alpine`
+  - `v1.3.5-14`
+  - `latest-14`
+  - `v1.3.5-14-alpine`
+  - `latest-14-alpine`
+
+- Alpine Node 14, based on `node:14-alpine`
+  - `v1.3.5-minimal`
+  - **`latest-minimal`**
+  - `v1.3.5-alpine-minimal`
+  - `latest-alpine-minimal`
+  - `v1.3.5-14-minimal`
+  - `latest-14-minimal`
+  - `v1.3.5-14-alpine-minimal`
+  - `latest-14-alpine-minimal`
+
+- Debian Buster, Node 14, Python 2 + 3, based on `node:14-buster-slim`
+  - `v1.3.5-buster`
+  - `latest-buster`
+  - `v1.3.5-14-buster`
+  - `latest-14-buster`
+
+- Debian Buster, Node 14, based on `node:14-buster-slim`
+  - `v1.3.5-buster-minimal`
+  - `latest-buster-minimal`
+  - `v1.3.5-14-buster-minimal`
+  - `latest-14-buster-minimal`
 
 
-| **Tag**                    | **Node** | **Arch** | **Python** | **Dev** | **Base Image**         |
-|----------------------------|----------|----------|------------|---------|------------------------|
-| v1.3.5-16                  |    16    | amd64    |   2.x 3.x  |   yes   | node:16-alpine         |
-| latest-16                  |          | arm32v6  |            |         |                        |
-| v1.3.5-16-alpine           |          | arm32v7  |            |         |                        |
-| latest-16-alpine           |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-16-minimal          |    16    | amd64    |     no     |   no    | node:16-alpine         |
-| latest-16-minimal          |          | arm32v6  |            |         |                        |
-| v1.3.5-16-alpine-minimal   |          | arm32v7  |            |         |                        |
-| latest-16-alpine-minimal   |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-16-buster           |    16    | amd64    |   2.x 3.x  |   yes   | node:16-buster-slim    |
-| latest-16-buster           |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
-|                            |          |          |            |         |                        |
-| v1.3.5-16-buster-minimal   |    16    | amd64    |     no     |   no    | node:16-buster-slim    |
-| latest-16-buster-minimal   |          | arm32v7  |            |         |                        |
-|                            |          | arm64v8  |            |         |                        |
-|                            |          | s390x    |            |         |                        |
+- Alpine Node 16, Python 2 + 3, based on `node:16-alpine`
+  - `v1.3.5-16`
+  - `latest-16`
+  - `v1.3.5-16-alpine`
+  - `latest-16-alpine`
+
+- Alpine Node 16, based on `node:16-alpine`
+  - `v1.3.5-16-minimal`
+  - `latest-16-minimal`
+  - `v1.3.5-16-alpine-minimal`
+  - `latest-16-alpine-minimal`
+
+- Debian Buster, Node 16, Python 2 + 3, based on `node:16-buster-slim`
+  - `v1.3.5-16-buster`
+  - `latest-16-buster`
+
+- Debian Buster, Node 16, based on `node:16-buster-slim`
+  - `v1.3.5-16-buster-minimal`
+  - `latest-16-buster-minimal`
 
 
 All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
