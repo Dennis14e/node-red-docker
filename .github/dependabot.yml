@@ -6,14 +6,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "09:00"
-      timezone: "Europe/Berlin"
 
   # Maintain dependencies for npm
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
-      time: "09:00"
-      timezone: "Europe/Berlin"
     versioning-strategy: "increase"
