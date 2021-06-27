@@ -6,7 +6,7 @@ on:
       - main
     tags-ignore:
       - v*
-  pull_request:
+  pull_request_target:
 
 jobs:
   build:
@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
-      BUILD_DATE: unknown
-      BUILD_VERSION: unknown
       DOCKER_PUSH: false
       DOCKER_REPO: dennis14e/node-red-dev
       DOCKER_TAGS: unknown
@@ -37,21 +35,15 @@ jobs:
           - default
           - minimal
     steps:
-      - name: Set BUILD_DATE environment variable
-        run: echo "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
-
-      - name: Set BUILD_VERSION environment variable
-        run: echo "BUILD_VERSION=${{ github.run_id }}" >> $GITHUB_ENV
+      - name: Set DOCKER_PUSH if the origin is this repository
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[skip-push]') != true
+        run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
       - name: Set TAG_SUFFIX environment variable
         run: |
           TAG_SUFFIX="-${{ matrix.TAG_SUFFIX }}"
           [ "$TAG_SUFFIX" = "-default" ] && TAG_SUFFIX=""
           echo "TAG_SUFFIX=$TAG_SUFFIX" >> $GITHUB_ENV
-
-      - name: Set DOCKER_PUSH if the origin is this repository
-        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[skip-push]') != true
-        run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
 
       - name: Remove linux/arm/v6 from buster build
         if: matrix.OS == 'buster'
@@ -145,8 +137,8 @@ jobs:
           push: ${{ env.DOCKER_PUSH }}
           tags: ${{ env.DOCKER_TAGS }}
           build-args: |
-            BUILD_DATE=${{ env.BUILD_DATE }}
-            BUILD_VERSION=${{ env.BUILD_VERSION }}
+            BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
+            BUILD_VERSION=${{ github.run_id }}
             BUILD_REF=${{ github.sha }}
             NODE_VERSION=${{ matrix.NODE_VERSION }}
             NODE_RED_VERSION=v${{ env.NODE_RED_VERSION }}
