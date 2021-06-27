@@ -19,7 +19,7 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
   - `s390x`
 
 - Debian Buster images (see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
-  - `arm64`
+  - `amd64`
   - `arm32v7`
   - `arm64v8`
   - `s390x`
