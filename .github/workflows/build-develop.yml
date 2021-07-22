@@ -1,9 +1,9 @@
-name: Build stable images
+name: Build develop images
 
 on:
   push:
-    tags:
-      - v*
+    branches-ignore:
+      - 'dependabot/**'
 
 jobs:
   build:
@@ -12,8 +12,8 @@ jobs:
     timeout-minutes: 180
     env:
       BUILD_DATE: unknown
-      DOCKER_PUSH: true
-      DOCKER_REPO: dennis14e/node-red
+      DOCKER_PUSH: false
+      DOCKER_REPO: dennis14e/node-red-dev
       DOCKER_TAGS: unknown
       NODE_LATEST: 14
       NODE_RED_VERSION: unknown
@@ -33,6 +33,10 @@ jobs:
           - default
           - minimal
     steps:
+      - name: Set DOCKER_PUSH if the origin is this repository
+        if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[skip-push]') != true
+        run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
+
       - name: Set BUILD_DATE environment variable
         run: echo "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
