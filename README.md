@@ -40,7 +40,7 @@ docker run              - run this container, initially building locally if nece
 -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
 -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
 --name mynodered        - give this machine a friendly local name
-dennis14e/node-red      - the image to base it on - currently Node-RED v2.0.4 with Node.js 14
+dennis14e/node-red      - the image to base it on - currently Node-RED v2.0.5 with Node.js 14
 ```
 
 
@@ -50,7 +50,7 @@ Running that command should give a terminal window with a running instance of No
 Welcome to Node-RED
 ===================
 
-18 May 18:55:17 - [info] Node-RED version: v2.0.4
+18 May 18:55:17 - [info] Node-RED version: v2.0.5
 18 May 18:55:17 - [info] Node.js  version: v14.17.0
 18 May 18:55:17 - [info] Linux 5.4.0-73-generic x64 LE
 18 May 18:55:18 - [info] Loading palette nodes
@@ -118,7 +118,7 @@ This makes it more easy to deploy in a multi architecture Docker environment. E.
 
 The tag naming convention is `v<node-red-version>-<node-version>-<os>-<image-type>`, where:
 - `<node-red-version>` is the Node-RED version, can be either latest or v`<node-red-version>`.
-  - latest : is the current Node-RED version (currently 2.0.4)
+  - latest : is the current Node-RED version (currently 2.0.5)
   - v`<node-red-version>` : is a specific Node-RED version (e.g. v1.3.4)
 - `<node-version>` is the Node.js version and is optional, can be either _none_, 12, 14 or 16.
   - _none_ : is the default Node.js version (14)
@@ -146,77 +146,77 @@ If you want to add dependencies with native dependencies, extend the Node-RED im
 The following table shows the variety of provided Node-RED images.
 
 - Alpine, Node 12, Python 2 + 3, based on `node:12-alpine`
-  - `v2.0.4-12`
+  - `v2.0.5-12`
   - `latest-12`
-  - `v2.0.4-12-alpine`
+  - `v2.0.5-12-alpine`
   - `latest-12-alpine`
 
 - Alpine, Node 12, based on `node:12-alpine`
-  - `v2.0.4-12-minimal`
+  - `v2.0.5-12-minimal`
   - `latest-12-minimal`
-  - `v2.0.4-12-alpine-minimal`
+  - `v2.0.5-12-alpine-minimal`
   - `latest-12-alpine-minimal`
 
 - Debian Buster, Node 12, Python 2 + 3, based on `node:12-buster-slim`
-  - `v2.0.4-12-buster`
+  - `v2.0.5-12-buster`
   - `latest-12-buster`
 
 - Debian Buster, Node 12, based on `node:12-buster-slim`
-  - `v2.0.4-12-buster-minimal`
+  - `v2.0.5-12-buster-minimal`
   - `latest-12-buster-minimal`
 
 
 - Alpine Node 14, Python 2 + 3, based on `node:14-alpine`
-  - `v2.0.4`
+  - `v2.0.5`
   - **`latest`**
-  - `v2.0.4-alpine`
+  - `v2.0.5-alpine`
   - `latest-alpine`
-  - `v2.0.4-14`
+  - `v2.0.5-14`
   - `latest-14`
-  - `v2.0.4-14-alpine`
+  - `v2.0.5-14-alpine`
   - `latest-14-alpine`
 
 - Alpine Node 14, based on `node:14-alpine`
-  - `v2.0.4-minimal`
+  - `v2.0.5-minimal`
   - **`latest-minimal`**
-  - `v2.0.4-alpine-minimal`
+  - `v2.0.5-alpine-minimal`
   - `latest-alpine-minimal`
-  - `v2.0.4-14-minimal`
+  - `v2.0.5-14-minimal`
   - `latest-14-minimal`
-  - `v2.0.4-14-alpine-minimal`
+  - `v2.0.5-14-alpine-minimal`
   - `latest-14-alpine-minimal`
 
 - Debian Buster, Node 14, Python 2 + 3, based on `node:14-buster-slim`
-  - `v2.0.4-buster`
+  - `v2.0.5-buster`
   - `latest-buster`
-  - `v2.0.4-14-buster`
+  - `v2.0.5-14-buster`
   - `latest-14-buster`
 
 - Debian Buster, Node 14, based on `node:14-buster-slim`
-  - `v2.0.4-buster-minimal`
+  - `v2.0.5-buster-minimal`
   - `latest-buster-minimal`
-  - `v2.0.4-14-buster-minimal`
+  - `v2.0.5-14-buster-minimal`
   - `latest-14-buster-minimal`
 
 
 - Alpine Node 16, Python 2 + 3, based on `node:16-alpine`
-  - `v2.0.4-16`
+  - `v2.0.5-16`
   - `latest-16`
-  - `v2.0.4-16-alpine`
+  - `v2.0.5-16-alpine`
   - `latest-16-alpine`
 
 - Alpine Node 16, based on `node:16-alpine`
-  - `v2.0.4-16-minimal`
+  - `v2.0.5-16-minimal`
   - `latest-16-minimal`
-  - `v2.0.4-16-alpine-minimal`
+  - `v2.0.5-16-alpine-minimal`
   - `latest-16-alpine-minimal`
 
 - Debian Buster, Node 16, Python 2 + 3, based on `node:16-buster-slim`
-  - `v2.0.4-16-buster`
+  - `v2.0.5-16-buster`
   - `latest-16-buster`
 
 - Debian Buster, Node 16, based on `node:16-buster-slim`
-  - `v2.0.4-16-buster-minimal`
+  - `v2.0.5-16-buster-minimal`
   - `latest-16-buster-minimal`
 
 
@@ -344,7 +344,7 @@ The main sections to modify are
 
 ```
     "dependencies": {
-        "node-red": "^2.0.4",            <-- set the version of Node-RED here
+        "node-red": "^2.0.5",            <-- set the version of Node-RED here
         "node-red-dashboard": "*"        <-- add any extra npm packages here
     },
 ```
@@ -570,7 +570,7 @@ docker run              - run this container, initially building locally if nece
 -v node_red_data:/data  - mount the internal /data to the host mode_red_data directory
 --name mynodered        - give this machine a friendly local name
 --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
-dennis14e/node-red      - the image to base it on - currently Node-RED v2.0.4
+dennis14e/node-red      - the image to base it on - currently Node-RED v2.0.5
 run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
 --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
 --userDir /data         - instruct the script where the Node-RED data needs to be stored
