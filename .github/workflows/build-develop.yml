@@ -24,7 +24,7 @@ jobs:
       matrix:
         OS:
           - alpine
-          - buster
+          - bullseye
         NODE_VERSION:
           - 12
           - 14
@@ -46,8 +46,8 @@ jobs:
           [ "$TAG_SUFFIX" = "-default" ] && TAG_SUFFIX=""
           echo "TAG_SUFFIX=$TAG_SUFFIX" >> $GITHUB_ENV
 
-      - name: Remove linux/arm/v6 from buster build
-        if: matrix.OS == 'buster'
+      - name: Remove linux/arm/v6 from bullseye build
+        if: matrix.OS == 'bullseye'
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/arm\/v6//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Checkout code
@@ -60,10 +60,10 @@ jobs:
         run: |
           TAGS=""
 
-          # v1.2.3-12-alpine, v1.2.3-12-alpine-minimal, v1.2.3-12-buster, v1.2.3-12-buster-minimal, v1.2.3-14-alpine, [...]
+          # v1.2.3-12-alpine, v1.2.3-12-alpine-minimal, v1.2.3-12-bullseye, v1.2.3-12-bullseye-minimal, v1.2.3-14-alpine, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
-          # latest-12-alpine, latest-12-alpine-minimal, latest-12-buster, latest-12-buster-minimal, latest-14-alpine, [...]
+          # latest-12-alpine, latest-12-alpine-minimal, latest-12-bullseye, latest-12-bullseye-minimal, latest-14-alpine, [...]
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
@@ -73,8 +73,8 @@ jobs:
         run: |
           TAGS="${{ env.DOCKER_TAGS }}"
 
-          # v1.2.3-alpine, v1.2.3-alpine-minimal, v1.2.3-buster, v1.2.3-buster-minimal
-          # latest-alpine, latest-alpine-minimal, latest-buster, latest-buster-minimal
+          # v1.2.3-alpine, v1.2.3-alpine-minimal, v1.2.3-bullseye, v1.2.3-bullseye-minimal
+          # latest-alpine, latest-alpine-minimal, latest-bullseye, latest-bullseye-minimal
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:v${{ env.NODE_RED_VERSION }}-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
           TAGS="$TAGS,${{ env.DOCKER_REPO }}:latest-${{ matrix.OS }}${{ env.TAG_SUFFIX }}"
 

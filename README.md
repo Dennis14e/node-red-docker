@@ -18,7 +18,7 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
   - `arm64v8`
   - `s390x`
 
-- Debian Buster images (see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
+- Debian Bullseye images (see [Debian ARM ports](https://wiki.debian.org/ArmPorts))
   - `amd64`
   - `arm32v7`
   - `arm64v8`
@@ -123,10 +123,10 @@ The tag naming convention is `v<node-red-version>-<node-version>-<os>-<image-typ
 - `<node-version>` is the Node.js version and is optional, can be either _none_, 12, 14 or 16.
   - _none_ : is the default Node.js version (14)
   - 12, 14, 16 : is Node.js version 12, 14, 16
-- `<os>` is the os of the base image and is optional, can be either _none_, alpine or buster.
+- `<os>` is the os of the base image and is optional, can be either _none_, alpine or bullseye.
   - _none_ : is the default base image (alpine)
-  - alpine : uses node:`<node-version>`-alpine as base image
-  - buster : uses node:`<node-version>`-buster-slim as base image
+  - alpine   : uses node:`<node-version>`-alpine as base image
+  - bullseye : uses node:`<node-version>`-bullseye-slim as base image
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
   - _none_ : is the default and has Python 2 & Python 3 + devtools installed
   - minimal : has no Python installed and no devtools installed
@@ -141,7 +141,7 @@ docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered dennis14e/no
 
 The default Node-RED images are based on [official Node.js Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
 Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation.
-If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or try using the Debian Buster based images.
+If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or try using the Debian Bullseye based images.
 
 The following table shows the variety of provided Node-RED images.
 
@@ -157,13 +157,13 @@ The following table shows the variety of provided Node-RED images.
   - `v2.0.6-12-alpine-minimal`
   - `latest-12-alpine-minimal`
 
-- Debian Buster, Node 12, Python 2 + 3, based on `node:12-buster-slim`
-  - `v2.0.6-12-buster`
-  - `latest-12-buster`
+- Debian Bullseye, Node 12, Python 2 + 3, based on `node:12-bullseye-slim`
+  - `v2.0.6-12-bullseye`
+  - `latest-12-bullseye`
 
-- Debian Buster, Node 12, based on `node:12-buster-slim`
-  - `v2.0.6-12-buster-minimal`
-  - `latest-12-buster-minimal`
+- Debian Bullseye, Node 12, based on `node:12-bullseye-slim`
+  - `v2.0.6-12-bullseye-minimal`
+  - `latest-12-bullseye-minimal`
 
 
 - Alpine Node 14, Python 2 + 3, based on `node:14-alpine`
@@ -186,17 +186,17 @@ The following table shows the variety of provided Node-RED images.
   - `v2.0.6-14-alpine-minimal`
   - `latest-14-alpine-minimal`
 
-- Debian Buster, Node 14, Python 2 + 3, based on `node:14-buster-slim`
-  - `v2.0.6-buster`
-  - `latest-buster`
-  - `v2.0.6-14-buster`
-  - `latest-14-buster`
+- Debian Bullseye, Node 14, Python 2 + 3, based on `node:14-bullseye-slim`
+  - `v2.0.6-bullseye`
+  - `latest-bullseye`
+  - `v2.0.6-14-bullseye`
+  - `latest-14-bullseye`
 
-- Debian Buster, Node 14, based on `node:14-buster-slim`
-  - `v2.0.6-buster-minimal`
-  - `latest-buster-minimal`
-  - `v2.0.6-14-buster-minimal`
-  - `latest-14-buster-minimal`
+- Debian Bullseye, Node 14, based on `node:14-bullseye-slim`
+  - `v2.0.6-bullseye-minimal`
+  - `latest-bullseye-minimal`
+  - `v2.0.6-14-bullseye-minimal`
+  - `latest-14-bullseye-minimal`
 
 
 - Alpine Node 16, Python 2 + 3, based on `node:16-alpine`
@@ -211,13 +211,13 @@ The following table shows the variety of provided Node-RED images.
   - `v2.0.6-16-alpine-minimal`
   - `latest-16-alpine-minimal`
 
-- Debian Buster, Node 16, Python 2 + 3, based on `node:16-buster-slim`
-  - `v2.0.6-16-buster`
-  - `latest-16-buster`
+- Debian Bullseye, Node 16, Python 2 + 3, based on `node:16-bullseye-slim`
+  - `v2.0.6-16-bullseye`
+  - `latest-16-bullseye`
 
-- Debian Buster, Node 16, based on `node:16-buster-slim`
-  - `v2.0.6-16-buster-minimal`
-  - `latest-16-buster-minimal`
+- Debian Bullseye, Node 16, based on `node:16-bullseye-slim`
+  - `v2.0.6-16-bullseye-minimal`
+  - `latest-16-bullseye-minimal`
 
 
 All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.

@@ -3,7 +3,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 
 ## Stage base
-FROM node:${NODE_VERSION}-buster-slim AS base
+FROM node:${NODE_VERSION}-bullseye-slim AS base
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
@@ -53,7 +53,7 @@ ARG NODE_RED_VERSION
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile="Dockerfile.buster" \
+    org.label-schema.docker.dockerfile="Dockerfile.bullseye" \
     org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
@@ -68,7 +68,7 @@ COPY --chown=node-red:root --from=build /usr/src/node-red/node_modules ./node_mo
 
 # Copy scripts
 RUN mkdir -p /app/scripts
-COPY scripts/common/* scripts/buster/* /app/scripts/
+COPY scripts/common/* scripts/bullseye/* /app/scripts/
 RUN chown node-red:root /app/scripts/* && \
     chmod 775 /app/scripts/*
 
