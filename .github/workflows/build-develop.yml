@@ -105,7 +105,7 @@ jobs:
           echo "DOCKER_TAGS=$TAGS" >> $GITHUB_ENV
 
       - name: Set up cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-v${{ env.NODE_RED_VERSION }}-${{ matrix.NODE_VERSION }}-${{ matrix.OS }}-${{ github.sha }}
