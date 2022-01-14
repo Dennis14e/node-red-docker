@@ -40,7 +40,7 @@ docker run              - run this container, initially building locally if nece
 -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
 -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
 --name mynodered        - give this machine a friendly local name
-dennis14e/node-red      - the image to base it on - currently Node-RED v2.1.4 with Node.js 14
+dennis14e/node-red      - the image to base it on - currently Node-RED v2.1.5 with Node.js 14
 ```
 
 
@@ -50,7 +50,7 @@ Running that command should give a terminal window with a running instance of No
 Welcome to Node-RED
 ===================
 
-18 May 18:55:17 - [info] Node-RED version: v2.1.4
+18 May 18:55:17 - [info] Node-RED version: v2.1.5
 18 May 18:55:17 - [info] Node.js  version: v14.18.1
 18 May 18:55:17 - [info] Linux 5.4.0-89-generic x64 LE
 18 May 18:55:18 - [info] Loading palette nodes
@@ -146,77 +146,77 @@ If you want to add dependencies with native dependencies, extend the Node-RED im
 The following table shows the variety of provided Node-RED images.
 
 - Alpine, Node 12, Python 2 + 3, based on `node:12-alpine`
-  - `v2.1.4-12`
+  - `v2.1.5-12`
   - `latest-12`
-  - `v2.1.4-12-alpine`
+  - `v2.1.5-12-alpine`
   - `latest-12-alpine`
 
 - Alpine, Node 12, based on `node:12-alpine`
-  - `v2.1.4-12-minimal`
+  - `v2.1.5-12-minimal`
   - `latest-12-minimal`
-  - `v2.1.4-12-alpine-minimal`
+  - `v2.1.5-12-alpine-minimal`
   - `latest-12-alpine-minimal`
 
 - Debian Bullseye, Node 12, Python 2 + 3, based on `node:12-bullseye-slim`
-  - `v2.1.4-12-bullseye`
+  - `v2.1.5-12-bullseye`
   - `latest-12-bullseye`
 
 - Debian Bullseye, Node 12, based on `node:12-bullseye-slim`
-  - `v2.1.4-12-bullseye-minimal`
+  - `v2.1.5-12-bullseye-minimal`
   - `latest-12-bullseye-minimal`
 
 
 - Alpine Node 14, Python 2 + 3, based on `node:14-alpine`
-  - `v2.1.4`
+  - `v2.1.5`
   - **`latest`**
-  - `v2.1.4-alpine`
+  - `v2.1.5-alpine`
   - `latest-alpine`
-  - `v2.1.4-14`
+  - `v2.1.5-14`
   - `latest-14`
-  - `v2.1.4-14-alpine`
+  - `v2.1.5-14-alpine`
   - `latest-14-alpine`
 
 - Alpine Node 14, based on `node:14-alpine`
-  - `v2.1.4-minimal`
+  - `v2.1.5-minimal`
   - **`latest-minimal`**
-  - `v2.1.4-alpine-minimal`
+  - `v2.1.5-alpine-minimal`
   - `latest-alpine-minimal`
-  - `v2.1.4-14-minimal`
+  - `v2.1.5-14-minimal`
   - `latest-14-minimal`
-  - `v2.1.4-14-alpine-minimal`
+  - `v2.1.5-14-alpine-minimal`
   - `latest-14-alpine-minimal`
 
 - Debian Bullseye, Node 14, Python 2 + 3, based on `node:14-bullseye-slim`
-  - `v2.1.4-bullseye`
+  - `v2.1.5-bullseye`
   - `latest-bullseye`
-  - `v2.1.4-14-bullseye`
+  - `v2.1.5-14-bullseye`
   - `latest-14-bullseye`
 
 - Debian Bullseye, Node 14, based on `node:14-bullseye-slim`
-  - `v2.1.4-bullseye-minimal`
+  - `v2.1.5-bullseye-minimal`
   - `latest-bullseye-minimal`
-  - `v2.1.4-14-bullseye-minimal`
+  - `v2.1.5-14-bullseye-minimal`
   - `latest-14-bullseye-minimal`
 
 
 - Alpine Node 16, Python 2 + 3, based on `node:16-alpine`
-  - `v2.1.4-16`
+  - `v2.1.5-16`
   - `latest-16`
-  - `v2.1.4-16-alpine`
+  - `v2.1.5-16-alpine`
   - `latest-16-alpine`
 
 - Alpine Node 16, based on `node:16-alpine`
-  - `v2.1.4-16-minimal`
+  - `v2.1.5-16-minimal`
   - `latest-16-minimal`
-  - `v2.1.4-16-alpine-minimal`
+  - `v2.1.5-16-alpine-minimal`
   - `latest-16-alpine-minimal`
 
 - Debian Bullseye, Node 16, Python 2 + 3, based on `node:16-bullseye-slim`
-  - `v2.1.4-16-bullseye`
+  - `v2.1.5-16-bullseye`
   - `latest-16-bullseye`
 
 - Debian Bullseye, Node 16, based on `node:16-bullseye-slim`
-  - `v2.1.4-16-bullseye-minimal`
+  - `v2.1.5-16-bullseye-minimal`
   - `latest-16-bullseye-minimal`
 
 
@@ -570,7 +570,7 @@ docker run              - run this container, initially building locally if nece
 -v node_red_data:/data  - mount the internal /data to the host mode_red_data directory
 --name mynodered        - give this machine a friendly local name
 --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
-dennis14e/node-red      - the image to base it on - currently Node-RED v2.1.4
+dennis14e/node-red      - the image to base it on - currently Node-RED v2.1.5
 run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
 --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
 --userDir /data         - instruct the script where the Node-RED data needs to be stored
