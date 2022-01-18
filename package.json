@@ -32,7 +32,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "2.1.5"
+        "node-red": "2.1.6"
     },
     "engines": {
         "node": ">=12"
