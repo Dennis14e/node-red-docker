@@ -51,7 +51,7 @@ jobs:
         run: echo "PLATFORMS=${{ env.PLATFORMS }}" | sed -e 's/linux\/arm\/v6//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
 
       - name: Checkout code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Get Node-RED version
         run: echo "NODE_RED_VERSION=$(jq .dependencies.\"node-red\" package.json | sed -e 's/"//g')" >> $GITHUB_ENV
